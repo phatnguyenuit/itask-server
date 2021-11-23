@@ -1,8 +1,8 @@
 {
-  "name": "graphql-generator",
+  "name": "itask-server",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "iTask GraphQL Server.",
+  "main": "dist/server.bundle.js",
   "scripts": {
     "codegen": "graphql-codegen --config codegen.yml",
     "dev:server": "yarn dev:build && npm-run-all --parallel dev:nodemon dev:watch &",
