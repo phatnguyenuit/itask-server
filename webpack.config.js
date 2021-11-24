@@ -11,12 +11,13 @@ const output = {
   filename: 'server.bundle.js',
 };
 
-module.exports = {
+/** @type {webpack.Configuration} */
+const config = {
   devtool: 'inline-source-map',
   mode: process.env.NODE_ENV,
   entry,
   output,
-  target: 'node',
+  target: 'node', // to exclude nodejs modules like fs, path, and ...etc
   plugins,
   module: {
     rules: [
@@ -37,3 +38,5 @@ module.exports = {
     extensions: ['.json', '.ts', '.gql'],
   },
 };
+
+module.exports = config;
