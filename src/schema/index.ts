@@ -2,7 +2,7 @@ import { makeExecutableSchema } from '@graphql-tools/schema';
 import { IncomingHttpHeaders } from 'http';
 
 import { DataSources } from 'datasources';
-import { Resolvers as GeneratedResolvers } from 'generated/graphql.types';
+import { Resolvers as GeneratedResolvers } from 'shared';
 
 import rootTypeDefs from './root.typeDefs.gql';
 import * as book from './book';

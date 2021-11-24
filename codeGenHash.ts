@@ -3,7 +3,7 @@ import { exec } from 'child_process';
 import fs from 'fs';
 
 const FOLDER_PATH = 'src/datasources';
-const HASH_FILE = 'dataSourceHash';
+const HASH_FILE = 'dataSourceHash.json';
 
 const writeNewHash = (hash: string): void => {
   fs.writeFile(HASH_FILE, hash, (error) => {
