@@ -106,3 +106,5 @@ dist
 # Custom
 yarn.lock
 package-lock.json
+
+**/*.types.validator.ts
