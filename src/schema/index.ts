@@ -15,7 +15,7 @@ export type ResolverContext = {
 export type Resolvers = GeneratedResolvers<ResolverContext>;
 
 export const typeDefs = [
-  // bookType
+  // define typeDefs
   rootTypeDefs,
   book.typeDefs,
 ];

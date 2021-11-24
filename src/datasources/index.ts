@@ -1,9 +1,11 @@
-// TODO use typescript-json-validator to validate dataSource response schema
+import BookAPI from './book/book.api';
 
 export type DataSources = {
-  // BookAPI: BookAPI
+  BookAPI: BookAPI;
 };
 
-const dataSources: DataSources = {};
+const dataSources: DataSources = {
+  BookAPI: new BookAPI(),
+};
 
 export default dataSources;

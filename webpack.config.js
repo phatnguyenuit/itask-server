@@ -1,11 +1,17 @@
 const path = require('path');
 const webpack = require('webpack');
 const nodeExternals = require('webpack-node-externals');
+const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 
+const tsConfig = require('./tsconfig.json');
+
+/** @type {webpack.Configuration['plugins']} */
 const plugins = [];
 
+/** @type {webpack.Configuration['entry']} */
 const entry = [path.resolve(__dirname, './src/server.ts')];
 
+/** @type {webpack.Configuration['output']} */
 const output = {
   path: path.resolve(__dirname, './dist'),
   filename: 'server.bundle.js',
@@ -27,15 +33,20 @@ const config = {
         loader: 'graphql-tag/loader',
       },
       {
-        test: /\.ts/,
-        loader: 'ts-loader',
-        exclude: /node_modules/,
+        // Ignore: .d.ts, .test.ts, and .spec.ts files
+        test: /.+(?<!\.d|\.test|\.spec)\.ts/,
+        use: {
+          loader: 'ts-loader',
+        },
+        // Excludes: node_modules, and __tests__ folders
+        exclude: [/node_modules/, /__tests__/],
       },
     ],
   },
   externals: [nodeExternals()],
   resolve: {
     extensions: ['.json', '.ts', '.gql'],
+    plugins: [new TsconfigPathsPlugin()],
   },
 };
 

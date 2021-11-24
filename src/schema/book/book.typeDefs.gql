@@ -3,6 +3,6 @@ type Book {
   author: String
 }
 
-type Query {
-  books: [Book]
+extend type Query {
+  getBooks: [Book!]!
 }

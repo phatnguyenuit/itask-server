@@ -1,9 +1,19 @@
+/**
+ * IMPORTANT NOTE
+ * typescript-json-validator can not work well on Windows. (use Linux/macOS instead)
+ * Related issue: https://github.com/ForbesLindesay/typescript-json-validator/issues/36
+ *
+ * Workaround:
+ *  - Open WSL (Windows Subsystem for Linux) having nodejs installed
+ *  - Run this file normally
+ */
 import { hashElement, HashElementNode } from 'folder-hash';
 import { exec } from 'child_process';
 import fs from 'fs';
 
 const FOLDER_PATH = 'src/datasources';
 const HASH_FILE = 'dataSourceHash.json';
+const FILE_PATTERN = /\.types\.ts/;
 
 const writeNewHash = (hash: string): void => {
   fs.writeFile(HASH_FILE, hash, (error) => {
@@ -18,8 +28,6 @@ const writeNewHash = (hash: string): void => {
 const executeJSONValidatorForPath = (filePath: string) =>
   new Promise((resolve, reject) => {
     const command = `cross-env typescript-json-validator --id ${filePath} --collection ${filePath}`;
-
-    console.log(`command`, command);
 
     exec(command, (error, stdout, stderr) => {
       if (stdout) console.log(stdout);
@@ -56,7 +64,7 @@ const collectFileHashes = (
   (hashedFile.children || []).forEach((child) => {
     const childFileNameWithPath = `${hashedFileNameWithPath}/${child.name}`;
 
-    if (child.name.endsWith('.types.ts')) {
+    if (FILE_PATTERN.test(child.name)) {
       result.push({
         filePath: childFileNameWithPath,
         hash: child.hash,
@@ -125,7 +133,6 @@ const generateOrSkipJSONValidator = async (): Promise<void> => {
     if (filePathsToGenerate.length === 0) {
       console.log('ℹ No files have changed, skipping validator codegen');
     } else {
-      console.log(`filePathsToGenerate`, filePathsToGenerate);
       await executeJSONValidator(filePathsToGenerate);
       writeNewHash(JSON.stringify(newFileHashes, null, 2));
     }
