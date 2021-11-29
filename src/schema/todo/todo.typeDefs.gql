@@ -1,0 +1,16 @@
+type Todo {
+  id: Int!
+  userId: Int!
+  title: String!
+  completed: Boolean!
+}
+
+input SearchTodoParams {
+  id: Int
+  title: String
+  completed: Boolean
+}
+
+extend type Query {
+  getTodos(userId: Int!, searchParams: SearchTodoParams): [Todo!]!
+}
