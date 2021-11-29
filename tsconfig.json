@@ -5,6 +5,7 @@
     "module": "commonjs",
     "rootDir": "src",
     "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
     "baseUrl": "src/",
     "resolveJsonModule": true,
     "declaration": false,

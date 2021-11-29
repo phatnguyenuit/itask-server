@@ -1,4 +1,4 @@
-declare module '*.gql' {
+declare module '*.typeDefs.gql' {
   import { DocumentNode } from 'graphql';
   const Schema: DocumentNode;
 

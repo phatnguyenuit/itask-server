@@ -107,5 +107,5 @@ dist
 yarn.lock
 package-lock.json
 
-dataSourceHash.json
+generatedHashes.json
 **/*.types.validator.ts
