@@ -17,8 +17,8 @@ export type Scalars = {
 
 export type Book = {
   __typename?: 'Book';
-  author?: Maybe<Scalars['String']>;
-  title?: Maybe<Scalars['String']>;
+  author: Scalars['String'];
+  title: Scalars['String'];
 };
 
 export type Mutation = {
@@ -30,11 +30,11 @@ export type Query = {
   __typename?: 'Query';
   _empty?: Maybe<Scalars['String']>;
   getBooks: Array<Book>;
-  getTodos: Array<Todo>;
+  searchTodos: Array<Todo>;
 };
 
 
-export type QueryGetTodosArgs = {
+export type QuerySearchTodosArgs = {
   searchParams?: InputMaybe<SearchTodoParams>;
   userId: Scalars['Int'];
 };
@@ -145,8 +145,8 @@ export type ResolversParentTypes = {
 };
 
 export type BookResolvers<ContextType = any, ParentType extends ResolversParentTypes['Book'] = ResolversParentTypes['Book']> = {
-  author?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  title?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  author?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  title?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -157,7 +157,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   _empty?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   getBooks?: Resolver<Array<ResolversTypes['Book']>, ParentType, ContextType>;
-  getTodos?: Resolver<Array<ResolversTypes['Todo']>, ParentType, ContextType, RequireFields<QueryGetTodosArgs, 'userId'>>;
+  searchTodos?: Resolver<Array<ResolversTypes['Todo']>, ParentType, ContextType, RequireFields<QuerySearchTodosArgs, 'userId'>>;
 };
 
 export type TodoResolvers<ContextType = any, ParentType extends ResolversParentTypes['Todo'] = ResolversParentTypes['Todo']> = {
@@ -175,5 +175,10 @@ export type Resolvers<ContextType = any> = {
   Todo?: TodoResolvers<ContextType>;
 };
 
+
+export type GetBooksQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetBooksQuery = { __typename?: 'Query', getBooks: Array<{ __typename?: 'Book', title: string, author: string }> };
 
 // <END> THIS FILE IS GENERATED, DO NOT EDIT! </END>

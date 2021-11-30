@@ -5,7 +5,7 @@ import {
 } from './jsonPlaceholder.api.types';
 import { validate } from './jsonPlaceholder.api.types.validator';
 
-class TodoAPI extends BaseAPI {
+class JSONPlaceholderAPI extends BaseAPI {
   constructor() {
     super();
     this.baseURL = 'https://jsonplaceholder.typicode.com';
@@ -22,4 +22,4 @@ class TodoAPI extends BaseAPI {
   }
 }
 
-export default TodoAPI;
+export default JSONPlaceholderAPI;

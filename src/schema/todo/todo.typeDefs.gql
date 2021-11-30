@@ -12,5 +12,5 @@ input SearchTodoParams {
 }
 
 extend type Query {
-  getTodos(userId: Int!, searchParams: SearchTodoParams): [Todo!]!
+  searchTodos(userId: Int!, searchParams: SearchTodoParams): [Todo!]!
 }
