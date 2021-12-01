@@ -11,6 +11,23 @@ input SearchTodoParams {
   completed: Boolean
 }
 
+input CreateTodoPayload {
+  userId: Int!
+  title: String!
+  completed: Boolean!
+}
+
+input UpdateTodoPayload {
+  title: String
+  completed: Boolean
+}
+
 extend type Query {
   searchTodos(userId: Int!, searchParams: SearchTodoParams): [Todo!]!
+}
+
+extend type Mutation {
+  createTodo(payload: CreateTodoPayload!): Todo!
+  updateTodo(id: Int!, payload: UpdateTodoPayload!): Todo!
+  deleteTodo(id: Int!): Boolean!
 }

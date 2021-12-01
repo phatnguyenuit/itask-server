@@ -1,9 +1,12 @@
-import BaseAPI from '../base.api';
+import { CreateTodoPayload, SearchTodoParams, UpdateTodoPayload } from 'shared';
+import { NonNullableDeep } from 'typings/common';
 import {
+  CreateTodoResponse,
   SearchTodosResponse,
-  SearchTodoParams,
+  UpdateTodoResponse,
 } from './jsonPlaceholder.api.types';
 import { validate } from './jsonPlaceholder.api.types.validator';
+import BaseAPI from '../base.api';
 
 class JSONPlaceholderAPI extends BaseAPI {
   constructor() {
@@ -11,7 +14,7 @@ class JSONPlaceholderAPI extends BaseAPI {
     this.baseURL = 'https://jsonplaceholder.typicode.com';
   }
 
-  async searchTodos(userId: number, params?: SearchTodoParams) {
+  async searchTodos(userId: number, params: NonNullableDeep<SearchTodoParams>) {
     const path = `/users/${userId}/todos`;
     const response = await this.get(path, params);
 
@@ -19,6 +22,37 @@ class JSONPlaceholderAPI extends BaseAPI {
       validate('SearchTodosResponse'),
       response,
     );
+  }
+
+  async createTodo(payload: CreateTodoPayload) {
+    const path = `/todos`;
+    const response = await this.post(path, payload);
+
+    return this.logOrThrowValidationError<CreateTodoResponse>(
+      validate('CreateTodoResponse'),
+      response,
+    );
+  }
+
+  async updateTodo(id: number, payload: NonNullableDeep<UpdateTodoPayload>) {
+    const path = `/todos/${id}`;
+    const response = await this.patch(path, payload);
+
+    return this.logOrThrowValidationError<UpdateTodoResponse>(
+      validate('UpdateTodoResponse'),
+      response,
+    );
+  }
+
+  async deleteTodo(id: number) {
+    try {
+      const path = `/todos/${id}`;
+      await this.delete(path);
+
+      return true;
+    } catch (error) {
+      return false;
+    }
   }
 }
 
