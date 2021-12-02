@@ -1,6 +1,7 @@
 import { ApolloServer } from 'apollo-server';
 import { ApolloServerExpressConfig } from 'apollo-server-express';
 import { ApolloServerPluginLandingPageDisabled } from 'apollo-server-core';
+import { AuthenticationError } from 'apollo-server-errors';
 
 import dataSources from './datasources';
 import schema from './schema';
@@ -15,7 +16,13 @@ const apolloConfig: ApolloServerExpressConfig = {
   plugins,
   dataSources: () => dataSources,
   nodeEnv: process.env.NODE_ENV,
-  context: ({ req }) => ({ headers: req.headers }),
+  context: ({ req }) => {
+    const token = req.headers.authorization || '';
+
+    if (!token) throw new AuthenticationError('You must be logged in.');
+
+    return { headers: req.headers };
+  },
 };
 
 // The ApolloServer constructor requires two parameters: your schema
