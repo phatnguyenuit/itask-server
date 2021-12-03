@@ -55,7 +55,7 @@
     "eslint-plugin-prettier": "^4.0.0",
     "folder-hash": "^4.0.1",
     "graphql-tag": "^2.12.6",
-    "husky": "^7.0.4",
+    "husky": "4.2.5",
     "lint-staged": "^12.1.2",
     "minimatch": "^3.0.4",
     "mws": "^2.0.8",
