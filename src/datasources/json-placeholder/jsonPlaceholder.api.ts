@@ -14,7 +14,10 @@ class JSONPlaceholderAPI extends BaseAPI {
     this.baseURL = 'https://jsonplaceholder.typicode.com';
   }
 
-  async searchTodos(userId: number, params: NonNullableDeep<SearchTodoParams>) {
+  async searchTodos(
+    userId: number,
+    params: Partial<NonNullableDeep<SearchTodoParams>>,
+  ) {
     const path = `/users/${userId}/todos`;
     const response = await this.get(path, params);
 
@@ -34,7 +37,10 @@ class JSONPlaceholderAPI extends BaseAPI {
     );
   }
 
-  async updateTodo(id: number, payload: NonNullableDeep<UpdateTodoPayload>) {
+  async updateTodo(
+    id: number,
+    payload: Partial<NonNullableDeep<UpdateTodoPayload>>,
+  ) {
     const path = `/todos/${id}`;
     const response = await this.patch(path, payload);
 
