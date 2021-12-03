@@ -8,10 +8,10 @@ import { AuthenticationError } from 'apollo-server-errors';
 import express from 'express';
 import http from 'http';
 
+import app from './app';
 import dataSources from './datasources';
 import schema from './schema';
 
-const app = express();
 const httpServer = http.createServer(app);
 
 const apolloPlugins = [

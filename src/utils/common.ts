@@ -5,7 +5,7 @@ export const removeNullableProperties = <TValues>(
 ): NonNullableDeep<TValues> => {
   return Object.fromEntries(
     Object.entries(values || {}).filter(
-      ([_, value]) => value !== null || value !== undefined,
+      ([_, value]) => value !== null && value !== undefined,
     ),
   ) as NonNullableDeep<TValues>;
 };
