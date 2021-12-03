@@ -23,16 +23,10 @@ const apolloPlugins = [
 
 const apolloConfig: ApolloServerExpressConfig = {
   schema,
-  plugins: apolloPlugins,
   dataSources: () => dataSources,
+  plugins: apolloPlugins,
   nodeEnv: process.env.NODE_ENV,
-  context: ({ req }) => {
-    const token = req.headers.authorization || '';
-
-    if (!token) throw new AuthenticationError('You must be logged in.');
-
-    return { headers: req.headers };
-  },
+  context: ({ req }) => ({ headers: req.headers }),
 };
 
 async function startApolloServer(
