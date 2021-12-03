@@ -1,11 +1,9 @@
 import { RequestHandler, Request } from 'express';
-import filter from 'lodash/filter';
 import { loremIpsum } from 'lorem-ipsum';
 
 import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from 'constants/common';
 import { Todo } from 'shared';
 import { paginate } from 'utils/paginate';
-import { removeNullableProperties } from 'utils/common';
 
 const NUM_OF_TODOS_PER_USER = 10;
 
@@ -41,6 +39,19 @@ const queryParamsMapping = (queryParams: Request['query']) => {
   };
 };
 
+const createTodoPredicate =
+  (params: Partial<Todo>) =>
+  (todo: Todo): boolean => {
+    const { id, userId, completed, title } = params;
+
+    return [
+      Boolean(id) ? todo.id === id : true,
+      Boolean(userId) ? todo.userId === userId : true,
+      completed !== undefined ? todo.completed === completed : true,
+      Boolean(title) ? new RegExp(title!, 'i').test(todo.title) : true,
+    ].every(Boolean);
+  };
+
 export const searchTodos: RequestHandler = (req, res) => {
   const {
     userId,
@@ -52,15 +63,14 @@ export const searchTodos: RequestHandler = (req, res) => {
   } = queryParamsMapping(req.query);
 
   const allTodos = Boolean(userId) ? TODOS_PER_USER[userId!] : TODOS;
-  const filteredTodos = filter(
-    allTodos,
-    removeNullableProperties({
+  const filteredTodos: Todo[] = allTodos.filter(
+    createTodoPredicate({
       userId,
       id,
       completed,
       title,
     }),
-  ) as Todo[];
+  );
 
   const { items, total, totalPages } = paginate(filteredTodos, page, pageSize);
 
