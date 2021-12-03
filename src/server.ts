@@ -4,7 +4,6 @@ import {
   ApolloServerPluginDrainHttpServer,
   PluginDefinition,
 } from 'apollo-server-core';
-import { AuthenticationError } from 'apollo-server-errors';
 import express from 'express';
 import http from 'http';
 
