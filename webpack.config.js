@@ -19,7 +19,7 @@ const output = {
 
 /** @type {webpack.Configuration} */
 const config = {
-  devtool: 'inline-source-map',
+  devtool: process.env.NODE_ENV === 'development' ? 'inline-source-map' : false,
   mode: process.env.NODE_ENV,
   entry,
   output,
