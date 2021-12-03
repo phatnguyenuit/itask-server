@@ -3,8 +3,6 @@ const webpack = require('webpack');
 const nodeExternals = require('webpack-node-externals');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 
-const tsConfig = require('./tsconfig.json');
-
 /** @type {webpack.Configuration['plugins']} */
 const plugins = [];
 
