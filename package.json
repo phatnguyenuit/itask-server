@@ -19,7 +19,8 @@
     "commit": "git-cz",
     "lint:fix": "yarn lint --fix",
     "lint": "eslint src/**/*.{ts,tsx}",
-    "release": "release-it"
+    "release": "release-it",
+    "type-check": "tsc --noEmit"
   },
   "dependencies": {
     "ajv": "6.12.0",
