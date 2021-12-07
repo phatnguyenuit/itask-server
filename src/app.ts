@@ -1,4 +1,5 @@
 import express from 'express';
+import errorMiddleware from './middlewares/error.middleware';
 import apiRoutes from './routes/api';
 
 const app = express();
@@ -14,5 +15,8 @@ app.use(express.json());
 
 // ROUTES
 app.use('/api', apiRoutes);
+
+// ERROR HANDLER
+app.use(errorMiddleware);
 
 export default app;

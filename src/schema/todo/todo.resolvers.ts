@@ -1,15 +1,27 @@
 import { removeNullableProperties } from 'utils/common';
-import { Resolvers } from '../index';
+import { Resolvers } from '../types';
 
 export const resolvers: Resolvers = {
   Query: {
-    searchTodos: (_, { userId, searchParams }, { dataSources }) => {
-      const nonNullableParams = removeNullableProperties(searchParams);
-
-      return dataSources.JSONPlaceholderAPI.searchTodos(
+    searchTodos: async (_, { userId, searchParams }, { dataSources }) => {
+      const {
+        page,
+        pageSize,
+        totalPages,
+        total,
+        data: todos,
+      } = await dataSources.TodoAPI.searchTodos(
         userId,
-        nonNullableParams,
+        removeNullableProperties(searchParams),
       );
+
+      return {
+        page,
+        pageSize,
+        totalPages,
+        total,
+        todos,
+      };
     },
   },
   Mutation: {

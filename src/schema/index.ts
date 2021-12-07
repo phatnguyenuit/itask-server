@@ -1,18 +1,8 @@
 import { makeExecutableSchema } from '@graphql-tools/schema';
-import { IncomingHttpHeaders } from 'http';
-
-import { DataSources } from 'datasources';
-import { Resolvers as GeneratedResolvers } from 'shared';
 
 import rootTypeDefs from './root.typeDefs.gql';
 import * as todo from './todo';
-
-export type ResolverContext = {
-  dataSources: DataSources;
-  headers: IncomingHttpHeaders;
-};
-
-export type Resolvers = GeneratedResolvers<ResolverContext>;
+import { Resolvers } from './types';
 
 export const typeDefs = [
   // define typeDefs

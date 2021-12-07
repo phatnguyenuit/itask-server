@@ -53,7 +53,7 @@ export type MutationUpdateTodoArgs = {
 export type Query = {
   __typename?: 'Query';
   _empty?: Maybe<Scalars['String']>;
-  searchTodos: Array<Todo>;
+  searchTodos?: Maybe<SearchTodoResponse>;
 };
 
 export type QuerySearchTodosArgs = {
@@ -62,15 +62,24 @@ export type QuerySearchTodosArgs = {
 };
 
 export type SearchTodoParams = {
-  completed?: InputMaybe<Scalars['Boolean']>;
   id?: InputMaybe<Scalars['Int']>;
+  isCompleted?: InputMaybe<Scalars['Boolean']>;
   title?: InputMaybe<Scalars['String']>;
+};
+
+export type SearchTodoResponse = {
+  __typename?: 'SearchTodoResponse';
+  page: Scalars['Int'];
+  pageSize: Scalars['Int'];
+  todos: Array<Todo>;
+  total: Scalars['Int'];
+  totalPages: Scalars['Int'];
 };
 
 export type Todo = {
   __typename?: 'Todo';
-  completed: Scalars['Boolean'];
   id: Scalars['Int'];
+  isCompleted: Scalars['Boolean'];
   title: Scalars['String'];
   userId: Scalars['Int'];
 };
@@ -193,6 +202,7 @@ export type ResolversTypes = {
   Mutation: ResolverTypeWrapper<{}>;
   Query: ResolverTypeWrapper<{}>;
   SearchTodoParams: SearchTodoParams;
+  SearchTodoResponse: ResolverTypeWrapper<SearchTodoResponse>;
   String: ResolverTypeWrapper<Scalars['String']>;
   Todo: ResolverTypeWrapper<Todo>;
   UpdateTodoPayload: UpdateTodoPayload;
@@ -206,6 +216,7 @@ export type ResolversParentTypes = {
   Mutation: {};
   Query: {};
   SearchTodoParams: SearchTodoParams;
+  SearchTodoResponse: SearchTodoResponse;
   String: Scalars['String'];
   Todo: Todo;
   UpdateTodoPayload: UpdateTodoPayload;
@@ -242,19 +253,31 @@ export type QueryResolvers<
 > = {
   _empty?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   searchTodos?: Resolver<
-    Array<ResolversTypes['Todo']>,
+    Maybe<ResolversTypes['SearchTodoResponse']>,
     ParentType,
     ContextType,
     RequireFields<QuerySearchTodosArgs, 'userId'>
   >;
 };
 
+export type SearchTodoResponseResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['SearchTodoResponse'] = ResolversParentTypes['SearchTodoResponse'],
+> = {
+  page?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  pageSize?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  todos?: Resolver<Array<ResolversTypes['Todo']>, ParentType, ContextType>;
+  total?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  totalPages?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type TodoResolvers<
   ContextType = any,
   ParentType extends ResolversParentTypes['Todo'] = ResolversParentTypes['Todo'],
 > = {
-  completed?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  isCompleted?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   title?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   userId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
@@ -263,5 +286,6 @@ export type TodoResolvers<
 export type Resolvers<ContextType = any> = {
   Mutation?: MutationResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
+  SearchTodoResponse?: SearchTodoResponseResolvers<ContextType>;
   Todo?: TodoResolvers<ContextType>;
 };

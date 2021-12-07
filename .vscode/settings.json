@@ -12,5 +12,9 @@
   "[yaml]": {
     "editor.insertSpaces": true,
     "editor.tabSize": 4
-  }
+  },
+  "files.eol": "\n",
+  "cSpell.words": [
+    "ITASK"
+  ]
 }

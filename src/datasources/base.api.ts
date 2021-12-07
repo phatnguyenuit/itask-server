@@ -1,5 +1,5 @@
 import { RESTDataSource } from 'apollo-datasource-rest';
-import { ResolverContext } from 'schema';
+import { ResolverContext } from 'schema/types';
 
 type Validator<TResponse> = (response: TResponse) => TResponse;
 

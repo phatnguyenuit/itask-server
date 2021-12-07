@@ -1,3 +1,18 @@
+export const getPagination = (
+  count: number,
+  page: number,
+  pageSize: number,
+) => {
+  const totalPages = Math.ceil(count / pageSize);
+  const skip = (page - 1) * pageSize;
+
+  return {
+    skip,
+    take: pageSize,
+    totalPages,
+  };
+};
+
 export const paginate = <TItem>(
   items: TItem[],
   page: number,

@@ -2,13 +2,21 @@ type Todo {
   id: Int!
   userId: Int!
   title: String!
-  completed: Boolean!
+  isCompleted: Boolean!
+}
+
+type SearchTodoResponse {
+  page: Int!
+  pageSize: Int!
+  totalPages: Int!
+  total: Int!
+  todos: [Todo!]!
 }
 
 input SearchTodoParams {
   id: Int
   title: String
-  completed: Boolean
+  isCompleted: Boolean
 }
 
 input CreateTodoPayload {
@@ -23,7 +31,7 @@ input UpdateTodoPayload {
 }
 
 extend type Query {
-  searchTodos(userId: Int!, searchParams: SearchTodoParams): [Todo!]!
+  searchTodos(userId: Int!, searchParams: SearchTodoParams): SearchTodoResponse
 }
 
 extend type Mutation {
