@@ -1,11 +1,9 @@
 {
-  "editor.formatOnSave": false,
-  "eslint.validate": [
-    "javascript",
-    "javascriptreact",
-    "typescript",
-    "typescriptreact"
-  ],
+  "editor.formatOnSave": true,
+  "[typescript]": {
+    "editor.formatOnSave": false
+  },
+  "eslint.validate": ["typescript"],
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
   },
@@ -14,7 +12,5 @@
     "editor.tabSize": 4
   },
   "files.eol": "\n",
-  "cSpell.words": [
-    "ITASK"
-  ]
+  "cSpell.words": ["ITASK"]
 }
