@@ -3,7 +3,7 @@
     "target": "es2018",
     "lib": ["dom", "es6", "esnext"],
     "module": "commonjs",
-    "rootDir": "src",
+    "rootDir": ".",
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
     "baseUrl": "src/",
