@@ -23,7 +23,9 @@
     "type-check": "tsc --noEmit",
     "prepare": "husky install",
     "prisma:migrate": "prisma migrate dev --name itask",
-    "prisma:seed": "prisma db seed"
+    "prisma:seed": "prisma db seed",
+    "prestart": "yarn build",
+    "start": "pm2 start dist/server.bundle.js --name iTask"
   },
   "dependencies": {
     "@prisma/client": "3.6.0",
@@ -67,6 +69,7 @@
     "mws": "^2.0.8",
     "nodemon": "^2.0.15",
     "npm-run-all": "^4.1.5",
+    "pm2": "^5.1.2",
     "prettier": "^2.5.0",
     "prisma": "3.6.0",
     "release-it": "^14.11.8",

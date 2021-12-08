@@ -1,7 +1,7 @@
 import { RESTDataSource } from 'apollo-datasource-rest';
 import { ResolverContext } from 'schema/types';
-
-type Validator<TResponse> = (response: TResponse) => TResponse;
+import { Validator } from 'typings/common';
+import { validateRawData } from 'utils/common';
 
 class BaseAPI extends RESTDataSource<ResolverContext> {
   // TODO handle http request
@@ -16,10 +16,10 @@ class BaseAPI extends RESTDataSource<ResolverContext> {
 
   protected logOrThrowValidationError<TResponse>(
     validator: Validator<TResponse>,
-    response: TResponse,
+    response: unknown,
   ): TResponse {
     try {
-      return validator(response);
+      return validateRawData(validator, response);
     } catch (error: any) {
       console.warn(this.context.headers, error.message);
       throw error;

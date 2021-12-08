@@ -46,13 +46,13 @@ async function startApolloServer(
   server.applyMiddleware({ app });
 
   const PORT = Number(getEnv('PORT', '4000'));
+  const ITASK_API_URL = getEnv('ITASK_API_URL');
+
   await new Promise<void>((resolve) =>
     httpServer.listen({ port: PORT }, resolve),
   );
 
-  console.log(
-    `🚀 Server ready at http://localhost:${PORT}${server.graphqlPath}`,
-  );
+  console.log(`🚀 Server ready at ${ITASK_API_URL}${server.graphqlPath}`);
 }
 
 startApolloServer(apolloConfig, app);
