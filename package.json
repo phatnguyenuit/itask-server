@@ -15,7 +15,7 @@
     "dev:nodemon": "nodemon dist/server.bundle.js",
     "transpile": "webpack --config webpack.config.js",
     "dev:watch": "cross-env NODE_ENV=development yarn transpile --watch",
-    "build": "cross-env NODE_ENV=production npm-run-all --parallel codegen transpile",
+    "build": "cross-env NODE_ENV=production yarn prisma:generate && npm-run-all --parallel codegen transpile",
     "commit": "git-cz",
     "lint:fix": "yarn lint --fix",
     "lint": "eslint src/**/*.{ts,tsx} prisma/**/*.ts",
@@ -24,6 +24,7 @@
     "prepare": "husky install",
     "prisma:migrate": "prisma migrate dev --name itask",
     "prisma:deploy": "prisma migrate deploy",
+    "prisma:generate": "prisma generate",
     "prisma:seed": "prisma db seed",
     "prestart": "yarn build",
     "start": "pm2 start dist/server.bundle.js --name iTask"
