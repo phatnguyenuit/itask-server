@@ -1,0 +1,42 @@
+type Todo {
+  id: Int!
+  userId: Int!
+  title: String!
+  isCompleted: Boolean!
+}
+
+type SearchTodoResponse {
+  page: Int!
+  pageSize: Int!
+  totalPages: Int!
+  total: Int!
+  todos: [Todo!]!
+}
+
+input SearchTodoParams {
+  id: Int
+  title: String
+  isCompleted: Boolean
+}
+
+input CreateTodoPayload {
+  userId: Int!
+  title: String!
+  isCompleted: Boolean!
+}
+
+input UpdateTodoPayload {
+  title: String
+  isCompleted: Boolean
+}
+
+extend type Query {
+  searchTodos(userId: Int!, searchParams: SearchTodoParams): SearchTodoResponse
+  getTodo(id: Int!): Todo!
+}
+
+extend type Mutation {
+  createTodo(payload: CreateTodoPayload!): Todo!
+  updateTodo(id: Int!, payload: UpdateTodoPayload!): Todo!
+  deleteTodo(id: Int!): Boolean!
+}

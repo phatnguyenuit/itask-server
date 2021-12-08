@@ -1,5 +1,5 @@
 overwrite: true
-# schema: "http://localhost:4000"
+# schema: "http://localhost:4000/graphql"
 schema:
     - src/schema/**/*.typeDefs.gql
 documents: null
@@ -8,13 +8,9 @@ generates:
         plugins:
             - add:
                   content:
-                      - '// <START> THIS FILE IS GENERATED, DO NOT EDIT! </START>'
-            - 'typescript'
-            - 'typescript-resolvers'
-            - add:
-                  placement: append
-                  content:
-                      - '// <END> THIS FILE IS GENERATED, DO NOT EDIT! </END>'
+                      - '// THIS FILE IS GENERATED, DO NOT EDIT!!!'
+            - typescript
+            - typescript-resolvers
         hooks:
             afterOnFileWrite:
-                - 'prettier --write'
+                - prettier --write

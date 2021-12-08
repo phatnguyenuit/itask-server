@@ -3,8 +3,6 @@ const webpack = require('webpack');
 const nodeExternals = require('webpack-node-externals');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 
-const tsConfig = require('./tsconfig.json');
-
 /** @type {webpack.Configuration['plugins']} */
 const plugins = [];
 
@@ -19,7 +17,7 @@ const output = {
 
 /** @type {webpack.Configuration} */
 const config = {
-  devtool: 'inline-source-map',
+  devtool: process.env.NODE_ENV === 'development' ? 'inline-source-map' : false,
   mode: process.env.NODE_ENV,
   entry,
   output,

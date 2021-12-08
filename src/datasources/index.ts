@@ -1,11 +1,11 @@
-import BookAPI from './book/book.api';
+import TodoAPI from './todo/todo.api';
 
 export type DataSources = {
-  BookAPI: BookAPI;
+  TodoAPI: TodoAPI;
 };
 
 const dataSources: DataSources = {
-  BookAPI: new BookAPI(),
+  TodoAPI: new TodoAPI(),
 };
 
 export default dataSources;

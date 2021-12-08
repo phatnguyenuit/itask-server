@@ -1,4 +1,4 @@
-// THIS FILE IS GENERATED, DO NOT EDIT!
+// THIS FILE IS GENERATED, DO NOT EDIT!!!
 import { GraphQLResolveInfo } from 'graphql';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
@@ -11,6 +11,9 @@ export type MakeOptional<T, K extends keyof T> = Omit<T, K> & {
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
   [SubKey in K]: Maybe<T[SubKey]>;
 };
+export type RequireFields<T, K extends keyof T> = {
+  [X in Exclude<keyof T, K>]?: T[X];
+} & { [P in K]-?: NonNullable<T[P]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -20,21 +23,75 @@ export type Scalars = {
   Float: number;
 };
 
-export type Book = {
-  __typename?: 'Book';
-  author?: Maybe<Scalars['String']>;
-  title?: Maybe<Scalars['String']>;
+export type CreateTodoPayload = {
+  isCompleted: Scalars['Boolean'];
+  title: Scalars['String'];
+  userId: Scalars['Int'];
 };
 
 export type Mutation = {
   __typename?: 'Mutation';
   _empty?: Maybe<Scalars['String']>;
+  createTodo: Todo;
+  deleteTodo: Scalars['Boolean'];
+  updateTodo: Todo;
+};
+
+export type MutationCreateTodoArgs = {
+  payload: CreateTodoPayload;
+};
+
+export type MutationDeleteTodoArgs = {
+  id: Scalars['Int'];
+};
+
+export type MutationUpdateTodoArgs = {
+  id: Scalars['Int'];
+  payload: UpdateTodoPayload;
 };
 
 export type Query = {
   __typename?: 'Query';
   _empty?: Maybe<Scalars['String']>;
-  getBooks: Array<Book>;
+  getTodo: Todo;
+  searchTodos?: Maybe<SearchTodoResponse>;
+};
+
+export type QueryGetTodoArgs = {
+  id: Scalars['Int'];
+};
+
+export type QuerySearchTodosArgs = {
+  searchParams?: InputMaybe<SearchTodoParams>;
+  userId: Scalars['Int'];
+};
+
+export type SearchTodoParams = {
+  id?: InputMaybe<Scalars['Int']>;
+  isCompleted?: InputMaybe<Scalars['Boolean']>;
+  title?: InputMaybe<Scalars['String']>;
+};
+
+export type SearchTodoResponse = {
+  __typename?: 'SearchTodoResponse';
+  page: Scalars['Int'];
+  pageSize: Scalars['Int'];
+  todos: Array<Todo>;
+  total: Scalars['Int'];
+  totalPages: Scalars['Int'];
+};
+
+export type Todo = {
+  __typename?: 'Todo';
+  id: Scalars['Int'];
+  isCompleted: Scalars['Boolean'];
+  title: Scalars['String'];
+  userId: Scalars['Int'];
+};
+
+export type UpdateTodoPayload = {
+  isCompleted?: InputMaybe<Scalars['Boolean']>;
+  title?: InputMaybe<Scalars['String']>;
 };
 
 export type ResolverTypeWrapper<T> = Promise<T> | T;
@@ -144,29 +201,30 @@ export type DirectiveResolverFn<
 
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
-  Book: ResolverTypeWrapper<Book>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
+  CreateTodoPayload: CreateTodoPayload;
+  Int: ResolverTypeWrapper<Scalars['Int']>;
   Mutation: ResolverTypeWrapper<{}>;
   Query: ResolverTypeWrapper<{}>;
+  SearchTodoParams: SearchTodoParams;
+  SearchTodoResponse: ResolverTypeWrapper<SearchTodoResponse>;
   String: ResolverTypeWrapper<Scalars['String']>;
+  Todo: ResolverTypeWrapper<Todo>;
+  UpdateTodoPayload: UpdateTodoPayload;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
-  Book: Book;
   Boolean: Scalars['Boolean'];
+  CreateTodoPayload: CreateTodoPayload;
+  Int: Scalars['Int'];
   Mutation: {};
   Query: {};
+  SearchTodoParams: SearchTodoParams;
+  SearchTodoResponse: SearchTodoResponse;
   String: Scalars['String'];
-};
-
-export type BookResolvers<
-  ContextType = any,
-  ParentType extends ResolversParentTypes['Book'] = ResolversParentTypes['Book'],
-> = {
-  author?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  title?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+  Todo: Todo;
+  UpdateTodoPayload: UpdateTodoPayload;
 };
 
 export type MutationResolvers<
@@ -174,6 +232,24 @@ export type MutationResolvers<
   ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation'],
 > = {
   _empty?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  createTodo?: Resolver<
+    ResolversTypes['Todo'],
+    ParentType,
+    ContextType,
+    RequireFields<MutationCreateTodoArgs, 'payload'>
+  >;
+  deleteTodo?: Resolver<
+    ResolversTypes['Boolean'],
+    ParentType,
+    ContextType,
+    RequireFields<MutationDeleteTodoArgs, 'id'>
+  >;
+  updateTodo?: Resolver<
+    ResolversTypes['Todo'],
+    ParentType,
+    ContextType,
+    RequireFields<MutationUpdateTodoArgs, 'id' | 'payload'>
+  >;
 };
 
 export type QueryResolvers<
@@ -181,13 +257,46 @@ export type QueryResolvers<
   ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query'],
 > = {
   _empty?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  getBooks?: Resolver<Array<ResolversTypes['Book']>, ParentType, ContextType>;
+  getTodo?: Resolver<
+    ResolversTypes['Todo'],
+    ParentType,
+    ContextType,
+    RequireFields<QueryGetTodoArgs, 'id'>
+  >;
+  searchTodos?: Resolver<
+    Maybe<ResolversTypes['SearchTodoResponse']>,
+    ParentType,
+    ContextType,
+    RequireFields<QuerySearchTodosArgs, 'userId'>
+  >;
+};
+
+export type SearchTodoResponseResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['SearchTodoResponse'] = ResolversParentTypes['SearchTodoResponse'],
+> = {
+  page?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  pageSize?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  todos?: Resolver<Array<ResolversTypes['Todo']>, ParentType, ContextType>;
+  total?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  totalPages?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type TodoResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['Todo'] = ResolversParentTypes['Todo'],
+> = {
+  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  isCompleted?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  title?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  userId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type Resolvers<ContextType = any> = {
-  Book?: BookResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
+  SearchTodoResponse?: SearchTodoResponseResolvers<ContextType>;
+  Todo?: TodoResolvers<ContextType>;
 };
-
-// THIS FILE IS GENERATED, DO NOT EDIT!
