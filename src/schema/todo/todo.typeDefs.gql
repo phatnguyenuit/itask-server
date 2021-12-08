@@ -22,16 +22,17 @@ input SearchTodoParams {
 input CreateTodoPayload {
   userId: Int!
   title: String!
-  completed: Boolean!
+  isCompleted: Boolean!
 }
 
 input UpdateTodoPayload {
   title: String
-  completed: Boolean
+  isCompleted: Boolean
 }
 
 extend type Query {
   searchTodos(userId: Int!, searchParams: SearchTodoParams): SearchTodoResponse
+  getTodo(id: Int!): Todo!
 }
 
 extend type Mutation {

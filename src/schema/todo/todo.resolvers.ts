@@ -23,17 +23,18 @@ export const resolvers: Resolvers = {
         todos,
       };
     },
+    getTodo: (_, { id }, { dataSources }) => dataSources.TodoAPI.getTodo(id),
   },
   Mutation: {
     createTodo: (_, { payload }, { dataSources }) => {
-      return dataSources.JSONPlaceholderAPI.createTodo(payload);
+      return dataSources.TodoAPI.createTodo(payload);
     },
     updateTodo: (_, { id, payload }, { dataSources }) => {
       const nonNullablePayload = removeNullableProperties(payload);
 
-      return dataSources.JSONPlaceholderAPI.updateTodo(id, nonNullablePayload);
+      return dataSources.TodoAPI.updateTodo(id, nonNullablePayload);
     },
     deleteTodo: (_, { id }, { dataSources }) =>
-      dataSources.JSONPlaceholderAPI.deleteTodo(id),
+      dataSources.TodoAPI.deleteTodo(id),
   },
 };

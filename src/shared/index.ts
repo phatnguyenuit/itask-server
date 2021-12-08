@@ -24,7 +24,7 @@ export type Scalars = {
 };
 
 export type CreateTodoPayload = {
-  completed: Scalars['Boolean'];
+  isCompleted: Scalars['Boolean'];
   title: Scalars['String'];
   userId: Scalars['Int'];
 };
@@ -53,7 +53,12 @@ export type MutationUpdateTodoArgs = {
 export type Query = {
   __typename?: 'Query';
   _empty?: Maybe<Scalars['String']>;
+  getTodo: Todo;
   searchTodos?: Maybe<SearchTodoResponse>;
+};
+
+export type QueryGetTodoArgs = {
+  id: Scalars['Int'];
 };
 
 export type QuerySearchTodosArgs = {
@@ -85,7 +90,7 @@ export type Todo = {
 };
 
 export type UpdateTodoPayload = {
-  completed?: InputMaybe<Scalars['Boolean']>;
+  isCompleted?: InputMaybe<Scalars['Boolean']>;
   title?: InputMaybe<Scalars['String']>;
 };
 
@@ -252,6 +257,12 @@ export type QueryResolvers<
   ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query'],
 > = {
   _empty?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  getTodo?: Resolver<
+    ResolversTypes['Todo'],
+    ParentType,
+    ContextType,
+    RequireFields<QueryGetTodoArgs, 'id'>
+  >;
   searchTodos?: Resolver<
     Maybe<ResolversTypes['SearchTodoResponse']>,
     ParentType,
