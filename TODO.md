@@ -5,6 +5,6 @@
 - [x] Get todos
 - [x] Mutate (create/update/delete) todos
 - [ ] Handle authorization
-- [ ] Handle CORS
+- [x] Handle CORS
 - [ ] Handle pagination
 - [ ] Format GraphQL error

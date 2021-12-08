@@ -1,10 +1,18 @@
 import express from 'express';
+import cors from 'cors';
+
+import { getEnv } from './config/env';
 import errorMiddleware from './middlewares/error.middleware';
 import apiRoutes from './routes/api';
 
 const app = express();
 
 // MIDDLEWARES
+app.use(
+  cors({
+    origin: getEnv('CORS_ORIGIN'),
+  }),
+);
 
 // request body parser
 // parse application/x-www-form-urlencoded
