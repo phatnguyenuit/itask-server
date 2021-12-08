@@ -9,18 +9,18 @@
   "scripts": {
     "build": "cross-env NODE_ENV=production npm-run-all --parallel codegen transpile",
     "codegen:response-validator": "ts-node generateValidators.ts",
-    "codegen:watch": "yarn codegen --watch src/schema/**/*.typeDefs.gql",
+    "codegen:watch": "npm run codegen --watch src/schema/**/*.typeDefs.gql",
     "codegen": "graphql-codegen --config codegen.yml",
     "commit": "git-cz",
-    "dev:build": "cross-env NODE_ENV=development yarn build",
+    "dev:build": "cross-env NODE_ENV=development npm run build",
     "dev:nodemon": "nodemon dist/server.bundle.js",
-    "dev:server": "yarn dev:build && npm-run-all --parallel dev:nodemon dev:watch &",
-    "dev:watch": "cross-env NODE_ENV=development yarn transpile --watch",
-    "lint:fix": "yarn lint --fix",
+    "dev:server": "npm run dev:build && npm-run-all --parallel dev:nodemon dev:watch &",
+    "dev:watch": "cross-env NODE_ENV=development npm run transpile --watch",
+    "lint:fix": "npm run lint --fix",
     "lint": "eslint src/**/*.{ts,tsx} prisma/**/*.ts",
-    "prebuild": "yarn prisma:generate",
+    "prebuild": "npm run prisma:generate",
     "prepare": "node ./prepare.js",
-    "prestart": "yarn build",
+    "prestart": "npm run build",
     "prisma:deploy": "prisma migrate deploy",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev --name itask",
@@ -88,7 +88,7 @@
   },
   "lint-staged": {
     "*.ts": [
-      "yarn lint:fix"
+      "npm run lint:fix"
     ],
     "{*.{json,md}}": [
       "prettier --write"
