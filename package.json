@@ -23,6 +23,7 @@
     "type-check": "tsc --noEmit",
     "prepare": "husky install",
     "prisma:migrate": "prisma migrate dev --name itask",
+    "prisma:deploy": "prisma migrate deploy",
     "prisma:seed": "prisma db seed",
     "prestart": "yarn build",
     "start": "pm2 start dist/server.bundle.js --name iTask"
