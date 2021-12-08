@@ -7,7 +7,7 @@
   "author": "PhatNguyen <phatnt.uit@gmail.com> (https://phatnguyenuit.github.io)",
   "license": "MIT",
   "scripts": {
-    "build": "cross-env NODE_ENV=production npm-run-all --parallel codegen transpile",
+    "build": "cross-env NODE_ENV=production npm run transpile",
     "codegen:response-validator": "ts-node generateValidators.ts",
     "codegen:watch": "npm run codegen --watch src/schema/**/*.typeDefs.gql",
     "codegen": "graphql-codegen --config codegen.yml",
@@ -18,7 +18,7 @@
     "dev:watch": "cross-env NODE_ENV=development npm run transpile --watch",
     "lint:fix": "npm run lint --fix",
     "lint": "eslint src/**/*.{ts,tsx} prisma/**/*.ts",
-    "prebuild": "npm run prisma:generate",
+    "prebuild": "npm-run-all --parallel prisma:generate codegen codegen:response-validator",
     "prepare": "node ./prepare.js",
     "prestart": "npm run build",
     "prisma:deploy": "prisma migrate deploy",
