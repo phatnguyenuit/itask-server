@@ -1,5 +1,5 @@
-import { RequestHandler, Request } from 'express';
 import { Prisma } from '@prisma/client';
+import { RequestHandler, Request } from 'express';
 
 import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from 'constants/common';
 import APIError from 'constants/APIError';
@@ -83,7 +83,10 @@ export const searchTodos: RequestHandler = async (req, res, next) => {
 
 export const createTodo: RequestHandler = async (req, res, next) => {
   try {
+    console.log("validate('CreateTodoInput')", validate('CreateTodoInput'));
     const data = validateRawData(validate('CreateTodoInput'), req.body);
+
+    console.log(`data`, data);
 
     const existingUser = await prisma.user.findUnique({
       where: {

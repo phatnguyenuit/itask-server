@@ -6,7 +6,7 @@ const prisma = new PrismaClient();
 const NUM_OF_TODOS_PER_USER = 20;
 
 const generateTodos = (): Prisma.TodoCreateWithoutUserInput[] =>
-  new Array(NUM_OF_TODOS_PER_USER).fill('').map((_, index) => ({
+  new Array(NUM_OF_TODOS_PER_USER).fill('').map(() => ({
     title: loremIpsum(),
     isCompleted: Math.random() > 0.5,
   }));

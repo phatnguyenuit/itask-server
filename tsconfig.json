@@ -6,7 +6,7 @@
     "rootDir": ".",
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
-    "baseUrl": "src/",
+    "baseUrl": "./src",
     "resolveJsonModule": true,
     "declaration": false,
     "sourceMap": true,

@@ -11,26 +11,26 @@
     "npm": "^6.14.15"
   },
   "scripts": {
-    "build": "cross-env NODE_ENV=production npm run transpile",
+    "build:production": "cross-env NODE_ENV=production npm run transpile",
     "codegen:response-validator": "ts-node generateValidators.ts",
     "codegen:watch": "npm run codegen --watch src/schema/**/*.typeDefs.gql",
     "codegen": "graphql-codegen --config codegen.yml",
     "commit": "git-cz",
-    "dev:build": "cross-env NODE_ENV=development npm run build",
+    "dev:build": "cross-env NODE_ENV=development npm run transpile",
     "dev:nodemon": "nodemon dist/server.bundle.js",
     "dev:server": "npm run dev:build && npm-run-all --parallel dev:nodemon dev:watch &",
     "dev:watch": "cross-env NODE_ENV=development npm run transpile --watch",
+    "heroku-prebuild": "npm-run-all prisma:deploy",
     "lint:fix": "npm run lint --fix",
     "lint": "eslint src/**/*.ts prisma/**/*.ts",
-    "prebuild": "npm-run-all --parallel prisma:generate codegen",
     "prepare": "node ./prepare.js",
-    "prestart": "npm run build",
     "prisma:deploy": "prisma migrate deploy",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev --name itask",
     "prisma:seed": "prisma db seed",
     "release": "release-it",
-    "start": "pm2 start dist/server.bundle.js --name iTask",
+    "start": "node dist/server.bundle.js",
+    "start:pm2": "pm2 start dist/server.bundle.js --name iTask",
     "transpile": "webpack --config webpack.config.js",
     "type-check": "tsc --noEmit"
   },
@@ -92,6 +92,7 @@
   },
   "lint-staged": {
     "*.ts": [
+      "prettier --write",
       "npm run lint:fix"
     ],
     "{*.{json,md}}": [
