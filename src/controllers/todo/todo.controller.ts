@@ -51,10 +51,10 @@ export const searchTodos: RequestHandler = async (req, res, next) => {
     if (count === 0) {
       return res.json({
         data: {
-          total: count,
-          totalPages: 0,
           page,
           pageSize,
+          total: count,
+          totalPages: 0,
           data: [],
         },
       });

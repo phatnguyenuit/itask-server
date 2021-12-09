@@ -3,4 +3,6 @@
 
 # Ignore hook in case running in CI environment
 [ -n "$CI" ] && exit 0
+yarn build:production
+git add .
 yarn type-check && npx lint-staged

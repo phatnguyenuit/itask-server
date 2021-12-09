@@ -11,7 +11,7 @@
     "npm": "^6.14.15"
   },
   "scripts": {
-    "build:production": "cross-env NODE_ENV=production npm run transpile",
+    "build:production": "cross-env NODE_ENV=production npm-run-all --parallel transpile:seed transpile",
     "codegen:response-validator": "ts-node generateValidators.ts",
     "codegen:watch": "npm run codegen --watch src/schema/**/*.typeDefs.gql",
     "codegen": "graphql-codegen --config codegen.yml",
@@ -32,7 +32,8 @@
     "start": "node dist/server.bundle.js",
     "start:pm2": "pm2 start dist/server.bundle.js --name iTask",
     "transpile": "webpack --config webpack.config.js",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "transpile:seed":"tsc prisma/seeds.ts"
   },
   "dependencies": {
     "@prisma/client": "3.6.0",

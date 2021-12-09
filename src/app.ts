@@ -14,7 +14,7 @@ app.use(
   }),
 );
 
-// request body parser
+// body parser
 // parse application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: false }));
 
