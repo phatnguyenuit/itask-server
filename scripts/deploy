@@ -1,5 +1,11 @@
 #!/bin/bash
 
+if [ -z "$1" ] 
+then
+  echo "❌ Required to provide Heroku APP_NAME 😬"
+  exit 0
+fi
+
 APP_NAME=$1
 
 deploy() {
