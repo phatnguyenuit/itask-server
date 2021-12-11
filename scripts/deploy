@@ -1,0 +1,9 @@
+#!/bin/bash
+
+APP_NAME=itask-api
+
+heroku container:push web -a $APP_NAME
+heroku container:release web -a $APP_NAME
+
+# Deploy prisma schema
+heroku run npm run prisma:deploy -a $APP_NAME
