@@ -25,3 +25,14 @@ heroku container:push web -a APP_NAME
 ```sh
 heroku container:release web -a APP_NAME
 ```
+
+### 3. All in one deploy script
+
+
+```sh
+./scripts/deploy APP_NAME
+```
+
+## References
+
+- [Heroku - Container Registry & Runtime (Docker Deploys)](https://devcenter.heroku.com/articles/container-registry-and-runtime)
