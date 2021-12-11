@@ -11,42 +11,44 @@
     "npm": "^6.14.15"
   },
   "scripts": {
-    "build:production": "cross-env NODE_ENV=production npm-run-all --parallel transpile:seed transpile",
-    "codegen:response-validator": "ts-node generateValidators.ts",
-    "codegen:watch": "npm run codegen --watch src/schema/**/*.typeDefs.gql",
-    "codegen": "graphql-codegen --config codegen.yml",
+    "build": "cross-env NODE_ENV=production npm-run-all transpile:seed transpile",
+    "codegen:gql": "graphql-codegen --config codegen.yml",
+    "codegen:validators": "ts-node generateValidators.ts",
+    "codegen": "npm-run-all codegen:gql codegen:validators",
     "commit": "git-cz",
     "dev:build": "cross-env NODE_ENV=development npm run transpile",
     "dev:nodemon": "nodemon dist/server.bundle.js",
-    "dev:server": "npm run dev:build && npm-run-all --parallel dev:nodemon dev:watch &",
-    "dev:watch": "cross-env NODE_ENV=development npm run transpile --watch",
-    "heroku-prebuild": "npm-run-all prisma:deploy",
+    "dev:server": "npm run dev:build && npm-run-all prisma:generate --parallel dev:nodemon dev:watch",
+    "dev:watch": "cross-env NODE_ENV=development npm run transpile -- --watch",
     "lint:fix": "npm run lint --fix",
     "lint": "eslint src/**/*.ts prisma/**/*.ts",
+    "prebuild": "npm run prisma:generate",
     "prepare": "node ./prepare.js",
     "prisma:deploy": "prisma migrate deploy",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev --name itask",
     "prisma:seed": "prisma db seed",
     "release": "release-it",
-    "start": "node dist/server.bundle.js",
     "start:pm2": "pm2 start dist/server.bundle.js --name iTask",
+    "start": "node dist/server.bundle.js",
+    "transpile:seed": "tsc prisma/seeds.ts",
     "transpile": "webpack --config webpack.config.js",
-    "type-check": "tsc --noEmit",
-    "transpile:seed":"tsc prisma/seeds.ts"
+    "type-check": "tsc --noEmit"
   },
   "dependencies": {
     "@prisma/client": "3.6.0",
     "ajv": "6.12.0",
     "apollo-datasource-rest": "^3.4.0",
-    "apollo-server": "^3.5.0",
     "apollo-server-express": "^3.5.0",
+    "apollo-server": "^3.5.0",
     "cors": "^2.8.5",
-    "dotenv": "^10.0.0",
     "dotenv-expand": "^5.1.0",
+    "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "graphql": "15.7.2",
-    "lorem-ipsum": "^2.0.4"
+    "lorem-ipsum": "^2.0.4",
+    "prisma": "3.6.0",
+    "ts-node": "^10.4.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^15.0.0",
@@ -79,10 +81,8 @@
     "npm-run-all": "^4.1.5",
     "pm2": "^5.1.2",
     "prettier": "^2.5.0",
-    "prisma": "3.6.0",
     "release-it": "^14.11.8",
     "ts-loader": "^9.2.6",
-    "ts-node": "^10.4.0",
     "tsconfig-paths-webpack-plugin": "^3.5.2",
     "typescript": "^4.5.2",
     "typescript-json-validator": "2.4.2",
@@ -106,6 +106,6 @@
     }
   },
   "prisma": {
-    "seed": "ts-node prisma/seeds.ts"
+    "seed": "ts-node prisma/seeds.js"
   }
 }

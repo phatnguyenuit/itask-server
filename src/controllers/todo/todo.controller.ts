@@ -8,7 +8,7 @@ import { getPagination } from 'utils/paginate';
 import prisma from 'utils/prisma';
 
 import { validate } from './todo.controller.types.validator';
-import { validateRawData } from 'utils/common';
+import { validateRawData } from '../../utils/common';
 
 const queryParamsMapping = (queryParams: Request['query']) => {
   const { userId, id, isCompleted, title, page, pageSize } = queryParams;

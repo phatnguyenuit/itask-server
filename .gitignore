@@ -80,7 +80,7 @@ typings/
 
 # Nuxt.js build / generate output
 .nuxt
-# dist - Current can not build on Heroku, so keep it on source code
+dist
 
 # Gatsby files
 .cache/
@@ -104,6 +104,7 @@ typings/
 .tern-port
 
 # Custom
+*.env
 yarn.lock
 package-lock.json
 

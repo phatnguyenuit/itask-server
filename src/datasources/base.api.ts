@@ -1,7 +1,7 @@
 import { RESTDataSource } from 'apollo-datasource-rest';
-import { ResolverContext } from 'schema/types';
-import { Validator } from 'typings/common';
-import { validateRawData } from 'utils/common';
+import { ResolverContext } from '../schema/types';
+import { Validator } from '../typings/common';
+import { validateRawData } from '../utils/common';
 
 class BaseAPI extends RESTDataSource<ResolverContext> {
   // TODO handle http request

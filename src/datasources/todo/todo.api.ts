@@ -1,6 +1,6 @@
 import { getEnv } from 'config/env';
 import { CreateTodoPayload, SearchTodoParams, UpdateTodoPayload } from 'shared';
-import { NonNullableDeep } from 'typings/common';
+import { NonNullableDeep } from '../../typings/common';
 
 import BaseAPI from '../base.api';
 import { validate } from './todo.api.types.validator';

@@ -1,4 +1,4 @@
-import { NonNullableDeep, Nullable, Validator } from 'typings/common';
+import { NonNullableDeep, Nullable, Validator } from '../typings/common';
 
 export function validateRawData<TData>(
   validator: Validator<TData>,
