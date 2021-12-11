@@ -22,7 +22,7 @@
     "dev:watch": "cross-env NODE_ENV=development npm run transpile -- --watch",
     "lint:fix": "npm run lint --fix",
     "lint": "eslint src/**/*.ts prisma/**/*.ts",
-    "prebuild": "npm run prisma:generate",
+    "prebuild": "npm-run-all prisma:generate codegen",
     "prepare": "node ./prepare.js",
     "prisma:deploy": "prisma migrate deploy",
     "prisma:generate": "prisma generate",
