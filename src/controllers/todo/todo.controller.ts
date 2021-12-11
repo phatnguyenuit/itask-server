@@ -4,11 +4,11 @@ import { RequestHandler, Request } from 'express';
 import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from 'constants/common';
 import APIError from 'constants/APIError';
 import { RECORD_NOT_FOUND } from 'constants/errors';
+import { validateRawData } from 'utils/common';
 import { getPagination } from 'utils/paginate';
 import prisma from 'utils/prisma';
 
 import { validate } from './todo.controller.types.validator';
-import { validateRawData } from '../../utils/common';
 
 const queryParamsMapping = (queryParams: Request['query']) => {
   const { userId, id, isCompleted, title, page, pageSize } = queryParams;
