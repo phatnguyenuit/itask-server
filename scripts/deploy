@@ -24,9 +24,9 @@ deploy() {
   echo "Deployed '$APP_NAME' success 🤩🎇✨🎉"
 }
 
-WHO_AM_I=`heroku whoami`
+WHO_AM_I=$(heroku whoami 2> /dev/null)
 
-if [[ "$WHO_AM_I" == "" ]]; then
+if [[ -z $WHO_AM_I ]]; then
   echo "⛔ You're logged in. Please login"
 
   # Login heroku 
