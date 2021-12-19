@@ -41,8 +41,9 @@ build/Release
 node_modules/
 jspm_packages/
 
+# Disable this pattern
 # TypeScript v1 declaration files
-typings/
+# typings/
 
 # TypeScript cache
 *.tsbuildinfo
