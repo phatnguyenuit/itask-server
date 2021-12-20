@@ -6,5 +6,5 @@
 - [x] Mutate (create/update/delete) todos
 - [ ] Handle authorization
 - [x] Handle CORS
-- [ ] Handle pagination
+- [x] Handle pagination
 - [ ] Format GraphQL error
