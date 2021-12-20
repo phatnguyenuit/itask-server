@@ -1,38 +1,193 @@
 # iTask GraphQL Server
 
-iTask GraphQL server
+> iTask GraphQL server
+
+## Table of contents
+- [iTask GraphQL Server](#itask-graphql-server)
+  - [Table of contents](#table-of-contents)
+  - [Features](#features)
+  - [Commands](#commands)
+    - [1. Development](#1-development)
+    - [2. Build](#2-build)
+    - [3. Generate type validators](#3-generate-type-validators)
+    - [4. Generate GraphQL TypeScript shared types](#4-generate-graphql-typescript-shared-types)
+    - [5. Generate both GraphQL TypeScript shared types and type validators](#5-generate-both-graphql-typescript-shared-types-and-type-validators)
+    - [6. Generate Prisma client](#6-generate-prisma-client)
+    - [7. Migrate Prisma dev environment](#7-migrate-prisma-dev-environment)
+    - [8. Deploy Prisma schema](#8-deploy-prisma-schema)
+    - [8. Git commit with commitizen CLI](#8-git-commit-with-commitizen-cli)
+  - [References](#references)
 
 ## Features
 
 - RESTful API
 - Apollo GraphQL server
-<!-- - Heroku deployment with Dockerfile -->
 
 
 ## Commands
 
-### 1. Push new container to Heroku
+### 1. Development
 
-Current heroku app name is `itask-api`
+Run & develop
+
+- Using `yarn`:
+
 
 ```sh
-heroku container:push web -a APP_NAME
+yarn dev:server
 ```
 
-### 2. Release new container to Heroku
+- Using `npm`:
 
 
 ```sh
-heroku container:release web -a APP_NAME
+npm run dev:server
 ```
 
-### 3. All in one deploy script
+### 2. Build
+
+Build production source code
+
+- Using `yarn`:
 
 
 ```sh
-./scripts/deploy APP_NAME
+yarn build
+```
+
+- Using `npm`:
+
+
+```sh
+npm run build
+```
+### 3. Generate type validators
+
+Generate TypeScript validator files
+
+- Using `yarn`:
+
+
+```sh
+yarn codegen:validators
+```
+
+- Using `npm`:
+
+
+```sh
+npm run codegen:validators
+```
+
+### 4. Generate GraphQL TypeScript shared types
+
+Generate TypeScript shared types from GraphQL
+
+- Using `yarn`:
+
+
+```sh
+yarn codegen:gql
+```
+
+- Using `npm`:
+
+
+```sh
+npm run codegen:gql
+```
+
+### 5. Generate both GraphQL TypeScript shared types and type validators
+
+Combine [command 3](#3-generate-type-validators) and [command 4](#4-generate-graphql-typescript-shared-types)
+
+- Using `yarn`:
+
+
+```sh
+yarn codegen
+```
+
+- Using `npm`:
+
+
+```sh
+npm run codegen
+```
+
+### 6. Generate Prisma client
+
+Generate Prisma client (`./node_modules/.prisma`)
+
+- Using `yarn`:
+
+
+```sh
+yarn prisma:generate
+```
+
+- Using `npm`:
+
+
+```sh
+npm run prisma:generate
+```
+
+### 7. Migrate Prisma dev environment
+
+Migrate Prisma schema and apply to database
+
+- Using `yarn`:
+
+
+```sh
+yarn prisma:dev
+```
+
+- Using `npm`:
+
+
+```sh
+npm run prisma:dev
+```
+
+### 8. Deploy Prisma schema
+
+Apply Prisma schema to production environment
+
+- Using `yarn`:
+
+
+```sh
+yarn prisma:deploy
+```
+
+- Using `npm`:
+
+
+```sh
+npm run prisma:deploy
+```
+
+### 8. Git commit with commitizen CLI
+
+Commit CLI command with interactive
+
+- Using `yarn`:
+
+
+```sh
+yarn commit
+```
+
+- Using `npm`:
+
+
+```sh
+npm run commit
 ```
 
 ## References
 
-- [Heroku - Container Registry & Runtime (Docker Deploys)](https://devcenter.heroku.com/articles/container-registry-and-runtime)
+- [Apollo GraphQL](https://www.apollographql.com/docs/)
+- [Prisma ORM](https://www.prisma.io/docs/getting-started/)
