@@ -8,3 +8,5 @@
 - [x] Handle CORS
 - [x] Handle pagination
 - [x] Format GraphQL error
+- [ ] Unit tests
+- [ ] Dockerize
