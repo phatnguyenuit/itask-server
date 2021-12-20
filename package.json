@@ -32,7 +32,8 @@
     "start": "node dist/server.bundle.js",
     "transpile:seed": "tsc prisma/seeds.ts",
     "transpile": "webpack --config webpack.config.js",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "test": "jest"
   },
   "dependencies": {
     "@prisma/client": "3.6.0",
@@ -42,6 +43,7 @@
     "apollo-server-express": "^3.5.0",
     "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
+    "cross-spawn": "^7.0.3",
     "dotenv": "^10.0.0",
     "dotenv-expand": "^5.1.0",
     "express": "^4.17.1",
@@ -53,6 +55,9 @@
     "uuid": "^8.3.2"
   },
   "devDependencies": {
+    "@babel/core": "^7.16.5",
+    "@babel/preset-env": "^7.16.5",
+    "@babel/preset-typescript": "^7.16.5",
     "@commitlint/cli": "^15.0.0",
     "@commitlint/config-conventional": "^15.0.0",
     "@graphql-codegen/add": "^3.1.0",
@@ -64,11 +69,13 @@
     "@types/bcrypt": "^5.0.0",
     "@types/express": "^4.17.13",
     "@types/folder-hash": "^4.0.1",
+    "@types/jest": "^27.0.3",
     "@types/minimatch": "^3.0.5",
     "@types/node": "^16.11.11",
     "@types/uuid": "^8.3.3",
     "@typescript-eslint/eslint-plugin": "^5.5.0",
     "@typescript-eslint/parser": "^5.5.0",
+    "babel-jest": "^27.4.5",
     "commitizen": "^4.2.4",
     "cross-env": "^7.0.3",
     "cz-conventional-changelog": "^3.3.0",
@@ -79,6 +86,7 @@
     "folder-hash": "^4.0.1",
     "graphql-tag": "^2.12.6",
     "husky": "^7.0.0",
+    "jest": "^27.4.5",
     "lint-staged": "^12.1.2",
     "minimatch": "^3.0.4",
     "mws": "^2.0.8",
