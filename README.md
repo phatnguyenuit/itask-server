@@ -6,7 +6,7 @@ iTask GraphQL server
 
 - RESTful API
 - Apollo GraphQL server
-- Heroku deployment with Dockerfile
+<!-- - Heroku deployment with Dockerfile -->
 
 
 ## Commands
