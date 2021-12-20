@@ -4,6 +4,9 @@ schema:
     - src/schema/**/*.typeDefs.gql
 documents: null
 generates:
+    src/shared/schema.graphql:
+        plugins:
+            - schema-ast
     src/shared/index.ts:
         plugins:
             - add:

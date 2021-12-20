@@ -4,7 +4,7 @@ import {
   ApolloServerPluginDrainHttpServer,
   PluginDefinition,
 } from 'apollo-server-core';
-import express from 'express';
+import express, { Request } from 'express';
 import http from 'http';
 
 import app from './app';
@@ -25,15 +25,28 @@ const apolloPlugins = [
     : undefined,
 ].filter(Boolean) as PluginDefinition[];
 
+let request: Request;
+
 const apolloConfig: ApolloServerExpressConfig = {
   schema,
   dataSources: () => dataSources,
   plugins: apolloPlugins,
   nodeEnv: process.env.NODE_ENV,
-  context: ({ req }) => ({
-    headers: req.headers,
-    // prisma, // Prisma client context
-  }),
+  context: ({ req }) => {
+    request = req;
+
+    return {
+      headers: req.headers,
+      // prisma, // Prisma client context
+    };
+  },
+  formatError: (error) => {
+    if (!error.extensions.correlation_id) {
+      error.extensions.correlation_id = request.headers['correlation_id'];
+    }
+
+    return error;
+  },
 };
 
 async function startApolloServer(

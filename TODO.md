@@ -4,7 +4,7 @@
 - [x] Generate shared TypeScript types using `@graphql-codegen/cli`
 - [x] Get todos
 - [x] Mutate (create/update/delete) todos
-- [ ] Handle authorization
+- [x] Handle authorization
 - [x] Handle CORS
 - [x] Handle pagination
-- [ ] Format GraphQL error
+- [x] Format GraphQL error
