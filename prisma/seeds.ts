@@ -15,6 +15,7 @@ const userData: Prisma.UserCreateInput[] = [
   {
     email: 'fast.nguyen@gmail.com',
     name: 'Fast Nguyen',
+    password: '$2b$10$0BUg6jB2FgTLvuzcR2ZHoe7QQFjTXzg.DzZ9QqWX6uz1yBTjkM0ga',
     todos: {
       create: generateTodos(),
     },
@@ -22,6 +23,7 @@ const userData: Prisma.UserCreateInput[] = [
   {
     email: 'tai.nguyen@gmail.com',
     name: 'Tai Nguyen',
+    password: '$2b$10$0BUg6jB2FgTLvuzcR2ZHoe7QQFjTXzg.DzZ9QqWX6uz1yBTjkM0ga',
     todos: {
       create: generateTodos(),
     },
@@ -29,6 +31,7 @@ const userData: Prisma.UserCreateInput[] = [
   {
     email: 'phuc.nguyen@gmail.com',
     name: 'Phuc Nguyen',
+    password: '$2b$10$0BUg6jB2FgTLvuzcR2ZHoe7QQFjTXzg.DzZ9QqWX6uz1yBTjkM0ga',
     todos: {
       create: generateTodos(),
     },

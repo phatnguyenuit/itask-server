@@ -4,6 +4,7 @@ import cors from 'cors';
 import { getEnv } from './config/env';
 import errorMiddleware from './middlewares/error.middleware';
 import apiRoutes from './routes/api';
+import authMiddleware from 'middlewares/authorization.middleware';
 
 const app = express();
 
@@ -22,7 +23,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 // ROUTES
-app.use('/api', apiRoutes);
+app.use('/api', authMiddleware, apiRoutes);
 
 // ERROR HANDLER
 app.use(errorMiddleware);

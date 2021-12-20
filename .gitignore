@@ -111,3 +111,4 @@ package-lock.json
 
 generatedHashes.json
 prisma/seeds.js
+**/*.types.validator.ts
