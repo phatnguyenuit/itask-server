@@ -1,15 +1,9 @@
 import { NonNullableDeep, Nullable, Validator } from 'typings/common';
 
-export function validateRawData<TData>(
+export const validateRawData = <TData>(
   validator: Validator<TData>,
   rawData: unknown,
-): TData {
-  try {
-    return validator(rawData);
-  } catch (error: any) {
-    throw error;
-  }
-}
+): TData => validator(rawData);
 
 export const removeNullableProperties = <TValues>(
   values?: Nullable<TValues>,
