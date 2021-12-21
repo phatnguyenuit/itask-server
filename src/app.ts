@@ -3,8 +3,8 @@ import cors from 'cors';
 
 import { getEnv } from './config/env';
 import errorMiddleware from './middlewares/error.middleware';
+import authMiddleware from './middlewares/auth.middleware';
 import apiRoutes from './routes/api';
-import authMiddleware from 'middlewares/authorization.middleware';
 
 const app = express();
 

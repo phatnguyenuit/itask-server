@@ -2,17 +2,14 @@ import { verify, sign, TokenExpiredError } from 'jsonwebtoken';
 import { getEnv } from 'config/env';
 import { INVALID_TOKEN_ERROR, EXPIRED_TOKEN_ERROR } from 'constants/errors';
 
-const secretKey = getEnv('SECRET_KEY');
-const expiresIn = getEnv('EXPIRES_IN');
-
 export const generateToken = <TData extends string | Buffer | object>(
   data: TData,
 ): Promise<string> =>
   new Promise((resolve, reject) => {
     sign(
       data,
-      secretKey,
-      { expiresIn },
+      getEnv('SECRET_KEY'),
+      { expiresIn: getEnv('EXPIRES_IN') },
       (error: Error | null, token: string | undefined) => {
         if (error) {
           reject(error);
