@@ -1,18 +1,15 @@
 import { RequestHandler } from 'express';
 import JWT from 'jsonwebtoken';
 
-import { getEnv } from 'config/env';
+import APIError from 'constants/APIError';
 import { INVALID_AUTHENTICATION_ERROR } from 'constants/errors';
-import * as encryption from 'utils/encryption';
+import { generateToken } from 'utils/auth';
 import { validateRawData } from 'utils/common';
+import * as encryption from 'utils/encryption';
 import logger from 'utils/logger';
 import prisma from 'utils/prisma';
 
 import { validate } from './auth.controller.types.validator';
-import APIError from 'constants/APIError';
-
-const secretKey = getEnv('SECRET_KEY');
-const expiresIn = getEnv('EXPIRES_IN');
 
 export const login: RequestHandler = async (req, res, next) => {
   try {
@@ -42,26 +39,16 @@ export const login: RequestHandler = async (req, res, next) => {
       name: user.name,
     };
 
-    JWT.sign(
-      data,
-      secretKey,
-      { expiresIn },
-      (err: Error | null, token: string | undefined) => {
-        if (err) {
-          return next(err);
-        }
+    const token = await generateToken(data);
+    // Decode token to get exp
+    const decodedToken = JWT.decode(token!, { complete: true });
 
-        // Decode token to get exp
-        const decodedToken = JWT.decode(token!, { complete: true });
-
-        res.json({
-          data: {
-            expiredAt: decodedToken?.payload?.exp,
-            accessToken: token,
-          },
-        });
+    res.json({
+      data: {
+        expiredAt: decodedToken?.payload?.exp,
+        accessToken: token,
       },
-    );
+    });
   } catch (error) {
     logger.error(error);
     next(error);

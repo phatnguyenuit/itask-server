@@ -1,6 +1,10 @@
 # iTask GraphQL Server
 
-> iTask GraphQL server
+![CI/CD](https://github.com/phatnguyenuit/itask-server/workflows/CI/badge.svg)
+[![codecov](https://codecov.io/gh/phatnguyenuit/itask-server/branch/master/graph/badge.svg?token=0JzRGxgu6c)](https://codecov.io/gh/phatnguyenuit/itask-server)
+![License](https://img.shields.io/github/license/phatnguyenuit/itask-server)
+
+iTask GraphQL server
 
 ## Table of contents
 - [iTask GraphQL Server](#itask-graphql-server)

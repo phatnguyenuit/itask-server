@@ -5,8 +5,6 @@ import { REQUIRED_TOKEN_ERROR } from 'constants/errors';
 import { verifyToken } from 'utils/auth';
 import logger from 'utils/logger';
 
-const secretKey = getEnv('SECRET_KEY');
-
 const authMiddleware: RequestHandler = async (req, _, next) => {
   const accessToken = req.header('x-access-token');
 
@@ -22,6 +20,7 @@ const authMiddleware: RequestHandler = async (req, _, next) => {
   }
 
   try {
+    const secretKey = getEnv('SECRET_KEY');
     await verifyToken(accessToken, secretKey);
     next();
   } catch (err) {

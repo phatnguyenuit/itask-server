@@ -2,9 +2,9 @@ import express from 'express';
 import cors from 'cors';
 
 import { getEnv } from './config/env';
+import authMiddleware from './middlewares/auth.middleware';
 import errorMiddleware from './middlewares/error.middleware';
 import apiRoutes from './routes/api';
-import authMiddleware from 'middlewares/authorization.middleware';
 
 const app = express();
 
