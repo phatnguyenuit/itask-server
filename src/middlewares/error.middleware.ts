@@ -7,7 +7,7 @@ const errorMiddleware: ErrorRequestHandler = (error, req, res, __) => {
   const accessToken = req.headers['x-access-token'];
   const correlationId = req.headers['correlation_id'];
 
-  logger.error('ERROR', correlationId, message);
+  logger.error('ERROR', `correlationId=${correlationId}`, `message=${message}`);
 
   return res.header('correlation_id', correlationId).status(statusCode).json({
     message,
