@@ -1,6 +1,8 @@
 FROM node:12.22.7-alpine
-RUN apk --no-cache add tree
+RUN apk --no-cache add bash tree
 WORKDIR /app
+COPY wait-for-it.sh ./wait-for-it.sh
+RUN chmod +x ./wait-for-it.sh
 COPY package.json ./
 COPY tsconfig.json ./
 COPY ./src ./

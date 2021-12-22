@@ -2,10 +2,14 @@ version: '3'
 
 services:
   postgres:
+    container_name: itask-postgres-prod
     env_file:
       - .docker.prod.env
+    volumes:
+      - postgres-data-prod:/var/lib/postgresql/data
 
   itask:
+    container_name: itask-server-prod
     build:
       context: .
       dockerfile: itask.Dockerfile
@@ -14,5 +18,10 @@ services:
       - 4000:4000
     env_file:
       - .docker.prod.env
-    depends_on:
-      - postgres
+    volumes:
+      - itask-node-modules-prod:/app/node_modules
+    command: sh -c './wait-for-it.sh postgres:5432 -t 30 -- npm run start:prod'
+
+volumes:
+  postgres-data-prod:
+  itask-node-modules-prod:

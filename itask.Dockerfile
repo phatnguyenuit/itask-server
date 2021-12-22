@@ -1,19 +1,21 @@
 FROM node:12.22.7-alpine
 WORKDIR /app
 COPY package.json ./
-COPY tsconfig.json ./
-COPY . .
 RUN npm install
-RUN npm run db
+COPY ./src ./
+COPY . .
 RUN npm run build
 
 ## this is stage two , where the app actually runs
 FROM node:12.22.7-alpine
+RUN apk --no-cache add bash tree
 WORKDIR /app
-COPY package.json ./
-COPY prisma ./
-RUN npm install --only=production
 COPY --from=0 /app/dist ./dist
-RUN npm install -g pm2
+COPY package.json ./
+COPY prisma ./prisma
+COPY wait-for-it.sh ./wait-for-it.sh
+RUN chmod +x ./wait-for-it.sh
+RUN npm install --only=production
+RUN tree -I node_modules
 EXPOSE 4000
-CMD ["pm2-runtime","dist/server.bundle.js", "--name iTask"]
+CMD [ "npm", "run", "start:prod" ]

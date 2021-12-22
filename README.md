@@ -10,7 +10,7 @@ iTask GraphQL server
 - [iTask GraphQL Server](#itask-graphql-server)
   - [Table of contents](#table-of-contents)
   - [Features](#features)
-  - [Commands](#commands)
+  - [Scripts](#scripts)
     - [1. Development](#1-development)
     - [2. Build](#2-build)
     - [3. Generate type validators](#3-generate-type-validators)
@@ -20,6 +20,7 @@ iTask GraphQL server
     - [7. Migrate Prisma dev environment](#7-migrate-prisma-dev-environment)
     - [8. Deploy Prisma schema](#8-deploy-prisma-schema)
     - [8. Git commit with commitizen CLI](#8-git-commit-with-commitizen-cli)
+    - [9. Backup database](#9-backup-database)
   - [References](#references)
 
 ## Features
@@ -28,7 +29,7 @@ iTask GraphQL server
 - Apollo GraphQL server
 
 
-## Commands
+## Scripts
 
 ### 1. Development
 
@@ -189,6 +190,12 @@ yarn commit
 
 ```sh
 npm run commit
+```
+
+### 9. Backup database
+
+```sh
+pg_dump -U $POSTGRES_USER -O -Fc -d $POSTGRES_ITASK_DB > itask.dump
 ```
 
 ## References

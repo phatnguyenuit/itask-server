@@ -4,8 +4,8 @@ services:
   postgres:
     env_file:
       - .docker.dev.env
-    ports:
-      - 5454:5432
+    volumes:
+      - postgres-data-dev:/var/lib/postgresql/data
 
   itask:
     build:
@@ -20,6 +20,7 @@ services:
       - ./:/app
       - /app/dist
       - /app/node_modules
+    command: sh -c './wait-for-it.sh postgres:5432 -t 30 -- npm run dev:server'
 
   # add pgadmin4 to manage PostreSQL database
   pgadmin4:
@@ -29,3 +30,5 @@ services:
       - .docker.dev.env
     ports:
       - 8080:80
+volumes:
+  postgres-data-dev:
