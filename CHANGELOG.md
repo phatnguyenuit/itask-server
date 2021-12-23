@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/phatnguyenuit/itask-server/compare/1.0.0...1.1.0) (2021-12-23)
+
+
+### Features
+
+* **dockerize:** Add dockerize for iTask server ([#4](https://github.com/phatnguyenuit/itask-server/issues/4)) ([404d387](https://github.com/phatnguyenuit/itask-server/commit/404d387a28aa1ca1542d6550ba3f9abb92ddaf83))
+
 # 1.0.0 (2021-12-21)
 
 
