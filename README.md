@@ -21,13 +21,15 @@ iTask GraphQL server
     - [8. Deploy Prisma schema](#8-deploy-prisma-schema)
     - [8. Git commit with commitizen CLI](#8-git-commit-with-commitizen-cli)
     - [9. Backup database](#9-backup-database)
+    - [9. Restore database](#9-restore-database)
+    - [10. Restore database automatically on Docker](#10-restore-database-automatically-on-docker)
   - [References](#references)
 
 ## Features
 
 - RESTful API
 - Apollo GraphQL server
-- Wait PostgreSQL ready before starting NodeJS server
+- Wait PostgreSQL ready before starting NodeJS server (on the Docker environment)
 
 
 ## Scripts
@@ -196,8 +198,21 @@ npm run commit
 ### 9. Backup database
 
 ```sh
-pg_dump -U $POSTGRES_USER -O -Fc -d $POSTGRES_ITASK_DB > itask.dump
+pg_dump -v -U $POSTGRES_USER -O -d $POSTGRES_ITASK_DB > path/to/sql/file
 ```
+
+### 9. Restore database
+
+```sh
+psql -v -U $POSTGRES_USER -d $POSTGRES_ITASK_DB < path/to/sql/file
+```
+
+
+### 10. Restore database automatically on Docker
+
+- Prepare a SQL backup file (named `$POSTGRES_ITASK_DB.sql` with `$POSTGRES_ITASK_DB` is your defined environment variable)
+- Place the SQL backup file under `./backup` folder.
+- When docker running up, this backup file will be restored automatically.
 
 ## References
 
