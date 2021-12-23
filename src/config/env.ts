@@ -3,17 +3,24 @@ import path from 'path';
 import dotEnv from 'dotenv';
 import dotEnvExpand from 'dotenv-expand';
 
+import logger from 'utils/logger';
+
 const NODE_ENV = process.env.NODE_ENV;
 
+const getFilePath = (file: string) =>
+  path.resolve(String(process.env.PWD), file);
+
 const dotEnvFiles = [
-  path.resolve('..', `.env.${NODE_ENV}.local`),
+  getFilePath(`.env.${NODE_ENV}.local`),
   // Don't include `.env.local` for `test` environment
   // since normally you expect tests to produce the same
   // results for everyone
-  NODE_ENV !== 'test' && path.resolve('..', '.env.local'),
-  path.resolve('..', `.env.${NODE_ENV}`),
-  path.resolve('..', '.env'),
+  NODE_ENV !== 'test' && getFilePath('.env.local'),
+  getFilePath(`.env.${NODE_ENV}`),
+  getFilePath('.env'),
 ].filter(Boolean) as string[];
+
+logger.log('Loading dotEnvFiles...', dotEnvFiles);
 
 export const loadEnv = () => {
   dotEnvFiles.forEach((dotEnvFile) => {

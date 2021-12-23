@@ -29,9 +29,10 @@ export const encrypt = async (plainText: string) => {
 export const verify = (plainText: string, hash: string) =>
   bcrypt.compare(plainText, hash);
 
-//   Generate hash from input
-const [text] = process.argv.slice(2);
+// Generate hash from input
+// Support to run this file directly
+// const [text] = process.argv.slice(2);
 
-if (text) {
-  encrypt(text).then(console.log).catch(console.error);
-}
+// if (text) {
+//   encrypt(text).then(console.log).catch(console.error);
+// }

@@ -1,6 +1,6 @@
 const SEVERITIES = ['log', 'error', 'warn', 'info'] as const;
 
-type Severity = typeof SEVERITIES[number];
+export type Severity = typeof SEVERITIES[number];
 
 class Logger {
   log = (...args: any[]) => this.execute('log', ...args);
