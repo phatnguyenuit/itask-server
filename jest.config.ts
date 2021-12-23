@@ -26,6 +26,7 @@ export default {
     '!**/coverage/**',
     '!**/shared/**',
     '!**/config/**',
+    '!**/mocks/**',
     '!**/*.d.ts',
     '!**/*.validator.ts',
     '!**/*.types.ts',
