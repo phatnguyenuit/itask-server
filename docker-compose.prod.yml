@@ -20,6 +20,7 @@ services:
       - .docker.prod.env
     volumes:
       - itask-node-modules-prod:/app/node_modules
+    # Wait postgres to be ready until 30 seconds
     command: sh -c './wait-for-it.sh postgres:5432 -t 30 -- npm run start:prod'
 
 volumes:

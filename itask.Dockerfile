@@ -13,7 +13,8 @@ WORKDIR /app
 COPY --from=0 /app/dist ./dist
 COPY package.json ./
 COPY prisma ./prisma
-COPY wait-for-it.sh ./wait-for-it.sh
+COPY ./scripts/wait-for-it.sh ./wait-for-it.sh
+# Make wait-for-it.sh executable
 RUN chmod +x ./wait-for-it.sh
 RUN npm install --only=production
 RUN tree -I node_modules

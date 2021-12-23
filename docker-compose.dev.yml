@@ -20,7 +20,8 @@ services:
       - ./:/app
       - /app/dist
       - /app/node_modules
-    command: sh -c './wait-for-it.sh postgres:5432 -t 30 -- npm run dev:server'
+    # Wait postgres to be ready until 30 seconds
+    command: sh -c './scripts/wait-for-it.sh postgres:5432 -t 30 -- npm run dev:server'
 
   # add pgadmin4 to manage PostreSQL database
   pgadmin4:

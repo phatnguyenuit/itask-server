@@ -27,6 +27,7 @@ iTask GraphQL server
 
 - RESTful API
 - Apollo GraphQL server
+- Wait PostgreSQL ready before starting NodeJS server
 
 
 ## Scripts
@@ -202,3 +203,5 @@ pg_dump -U $POSTGRES_USER -O -Fc -d $POSTGRES_ITASK_DB > itask.dump
 
 - [Apollo GraphQL](https://www.apollographql.com/docs/)
 - [Prisma ORM](https://www.prisma.io/docs/getting-started/)
+- [Docker - Control startup and shutdown order in Compose](https://docs.docker.com/compose/startup-order/)
+- [Wait for it](https://github.com/vishnubob/wait-for-it)
