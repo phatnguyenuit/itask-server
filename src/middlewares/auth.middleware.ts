@@ -4,10 +4,10 @@ import { REQUIRED_TOKEN_ERROR } from 'constants/errors';
 import { verifyToken } from 'utils/auth';
 
 const authMiddleware: RequestHandler = async (req, _, next) => {
-  const accessToken = req.header('x-access-token');
+  const accessToken = req.headers['x-access-token'];
 
   //   Ignore `/auth/*` routes
-  if (req.path.includes('/auth')) {
+  if (/\/auth\/.*/.test(req.path)) {
     return next();
   }
 
@@ -17,7 +17,7 @@ const authMiddleware: RequestHandler = async (req, _, next) => {
   }
 
   try {
-    await verifyToken(accessToken);
+    await verifyToken(String(accessToken));
     next();
   } catch (err) {
     next(err);
