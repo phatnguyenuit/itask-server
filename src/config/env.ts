@@ -3,7 +3,7 @@ import path from 'path';
 import dotEnv from 'dotenv';
 import dotEnvExpand from 'dotenv-expand';
 
-import logger from 'utils/logger';
+// import logger from 'utils/logger';
 
 const NODE_ENV = process.env.NODE_ENV;
 
@@ -20,7 +20,7 @@ const dotEnvFiles = [
   getFilePath('.env'),
 ].filter(Boolean) as string[];
 
-logger.log('Loading dotEnvFiles...', dotEnvFiles);
+// logger.log('Loading dotEnvFiles...', dotEnvFiles);
 
 export const loadEnv = () => {
   dotEnvFiles.forEach((dotEnvFile) => {
