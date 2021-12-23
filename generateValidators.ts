@@ -112,7 +112,6 @@ const generateOrSkipGeneratingValidators = async (
   folderPath: string,
   fileGlob: string,
   hashedFilePath: string,
-  force: boolean = false,
 ) => {
   try {
     const hash = await hashElement(folderPath, {
@@ -128,7 +127,7 @@ const generateOrSkipGeneratingValidators = async (
       (fileHash) => fileHash.filePath,
     );
 
-    if (!isExistedHashFile || force) {
+    if (!isExistedHashFile) {
       console.log('ℹ Hash file does not exist, generating everything...');
     } else {
       try {
@@ -162,11 +161,8 @@ const generateOrSkipGeneratingValidators = async (
   }
 };
 
-const [force] = process.argv.slice(2);
-
 generateOrSkipGeneratingValidators(
   LOOKUP_FOLDER_PATH,
   LOOKUP_FILE_GLOB,
   HASHED_FILE_PATH,
-  Boolean(force),
 );
