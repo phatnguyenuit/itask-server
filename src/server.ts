@@ -8,9 +8,10 @@ import express, { Request } from 'express';
 import http from 'http';
 
 import app from './app';
-import { loadEnv, getEnv } from './config/env';
+import { loadEnv } from './config/env';
 import dataSources from './datasources';
 import schema from './schema';
+import { getEnv } from './utils/common';
 // import prisma from './utils/prisma';
 
 // Ensure environment variables are read.

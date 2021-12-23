@@ -2,7 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
 
-import { getEnv } from './config/env';
+import { getEnv } from './utils/common';
 import authMiddleware from './middlewares/auth.middleware';
 import errorMiddleware from './middlewares/error.middleware';
 import apiRoutes from './routes/api';

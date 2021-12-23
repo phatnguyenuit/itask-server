@@ -33,13 +33,3 @@ export const loadEnv = () => {
     }
   });
 };
-
-export const getEnv = (name: string, defaultValue?: string) => {
-  const value = process.env[name] || defaultValue;
-
-  if (!value) {
-    throw new Error(`Environment variable named "${name}" is not defined.`);
-  }
-
-  return value;
-};

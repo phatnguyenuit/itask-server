@@ -17,7 +17,7 @@ export default {
   clearMocks: true,
 
   // Indicates whether the coverage information should be collected while executing the test
-  collectCoverage: true,
+  collectCoverage: false,
 
   // An array of glob patterns indicating a set of files for which coverage information should be collected
   collectCoverageFrom: [
@@ -25,6 +25,7 @@ export default {
     '!**/node_modules/**',
     '!**/coverage/**',
     '!**/shared/**',
+    '!**/config/**',
     '!**/*.d.ts',
     '!**/*.validator.ts',
     '!**/*.types.ts',
@@ -132,7 +133,7 @@ export default {
   setupFiles: ['./src/setupTests.ts'],
 
   // A list of paths to modules that run some code to configure or set up the testing framework before each test
-  // setupFilesAfterEnv: [],
+  setupFilesAfterEnv: ['./src/jest.setup.ts'],
 
   // The number of seconds after which a test is considered as slow and reported as such in the results.
   // slowTestThreshold: 5,

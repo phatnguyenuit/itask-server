@@ -1,6 +1,6 @@
 import jwt, { TokenExpiredError } from 'jsonwebtoken';
-import { getEnv } from 'config/env';
 import { INVALID_TOKEN_ERROR, EXPIRED_TOKEN_ERROR } from 'constants/errors';
+import { getEnv } from './common';
 
 export const generateToken = <TData extends object>(
   data: TData,

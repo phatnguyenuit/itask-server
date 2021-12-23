@@ -1,7 +1,6 @@
 module.exports = {
   parser: '@typescript-eslint/parser',
   env: {
-    browser: true,
     commonjs: true,
     es6: true,
     jest: true,
@@ -23,7 +22,7 @@ module.exports = {
 
     // Add TypeScript specific rules (and turn off ESLint equivalents)
     '@typescript-eslint/consistent-type-assertions': 'warn',
-    'no-array-constructor': 'off',
+    'no-array-constructor': 'warn',
     '@typescript-eslint/no-array-constructor': 'warn',
     'no-redeclare': 'off',
     '@typescript-eslint/no-redeclare': 'warn',
@@ -47,14 +46,8 @@ module.exports = {
       },
     ],
     'no-unused-vars': 'off',
-    '@typescript-eslint/no-unused-vars': [
-      'warn',
-      {
-        args: 'none',
-        ignoreRestSiblings: true,
-      },
-    ],
-    'no-useless-constructor': 'off',
+    '@typescript-eslint/no-unused-vars': ['off'],
+    'no-useless-constructor': 'warn',
     '@typescript-eslint/no-useless-constructor': 'warn',
   },
 };

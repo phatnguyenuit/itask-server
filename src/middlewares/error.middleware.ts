@@ -1,7 +1,7 @@
 import { ErrorRequestHandler } from 'express';
 import logger from 'utils/logger';
 
-const errorMiddleware: ErrorRequestHandler = (error, req, res, __) => {
+const errorMiddleware: ErrorRequestHandler = (error, req, res) => {
   const message = error.message || 'Something went wrong.';
   const statusCode = error.statusCode || 500;
   const correlationId = req.headers['correlation_id'];
