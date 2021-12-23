@@ -1,0 +1,38 @@
+version: '3'
+
+services:
+  postgres:
+    container_name: itask-postgres-dev
+    env_file:
+      - .docker.dev.env
+    volumes:
+      - postgres-data-dev:/var/lib/postgresql/data
+
+  itask:
+    container_name: itask-server-dev
+    build:
+      context: .
+      dockerfile: itask.dev.Dockerfile
+    ports:
+      # - HOST:CONTAINER
+      - 4000:4000
+    env_file:
+      - .docker.dev.env
+    volumes:
+      - ./:/app
+      - /app/dist
+      - itask-node-modules-dev:/app/node_modules
+    # Wait postgres to be ready until 30 seconds
+    command: sh -c './scripts/wait-for-it.sh postgres:5432 -t 30 -- npm run dev:server'
+
+  # add pgadmin4 to manage PostreSQL database
+  pgadmin4:
+    container_name: itask-pgadmin4-dev
+    image: dpage/pgadmin4
+    env_file:
+      - .docker.dev.env
+    ports:
+      - 8080:80
+volumes:
+  postgres-data-dev:
+  itask-node-modules-dev:

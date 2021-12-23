@@ -9,4 +9,7 @@
 - [x] Handle pagination
 - [x] Format GraphQL error
 - [ ] Unit tests
-- [ ] Dockerize
+- [x] Dockerize
+- [ ] Logging
+- [ ] Fix error format with `correlationId` by another way not get from assigned request via `context` creation
+- [ ] Switch from `apollo-codegen` to `apollo` CLI

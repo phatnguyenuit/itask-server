@@ -22,13 +22,11 @@ function getToken() {
   pm.sendRequest(postRequest, (error, response) => {
     if (error) {
       console.error(error);
-    } else {
+    } else if (response.code === 200) {
       const { data } = response.json();
-      console.log(`data`, data);
       console.log('Get token successfully', data);
 
-      const now = new Date().getTime();
-      const newExpiredAt = now + data.expiredAt * 1000;
+      const newExpiredAt = data.expiredAt * 1000;
 
       pm.environment.set('expiredAt', newExpiredAt);
       pm.environment.set('accessToken', data.accessToken);

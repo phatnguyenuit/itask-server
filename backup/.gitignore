@@ -1,0 +1,2 @@
+# Put $POSTGRES_ITASK_DB.sql backup file in this folder and exclude from the repository
+*
