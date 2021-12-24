@@ -30,6 +30,7 @@ export default {
     '!**/*.d.ts',
     '!**/*.validator.ts',
     '!**/*.types.ts',
+    '!src/utils/prisma.ts',
   ],
 
   // The directory where Jest should output its coverage files

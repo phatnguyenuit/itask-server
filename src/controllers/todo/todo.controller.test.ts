@@ -1,13 +1,23 @@
+import { Todo } from '@prisma/client';
 import { Response, NextFunction } from 'express';
 
+import APIError from 'constants/APIError';
 import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from 'constants/common';
+import { RECORD_NOT_FOUND } from 'constants/errors';
 import { prismaMock } from 'setupTests';
 import { createMockRequest } from 'utils/testUtils';
-import { createTodo, queryParamsMapping, searchTodos } from './todo.controller';
-import { Todo } from '@prisma/client';
-import { CreateTodoInput } from './todo.controller.types';
-import APIError from 'constants/APIError';
-import { CreateTodoPayload } from 'shared';
+
+import { CreateTodoInput, UpdateTodoInput } from './todo.controller.types';
+import {
+  createTodo,
+  deleteTodo,
+  getTodo,
+  queryParamsMapping,
+  searchTodos,
+  TodoIdPathParams,
+  updateTodo,
+  verifyTodoId,
+} from './todo.controller';
 
 const jsonMock = jest.fn();
 const nextMock = jest.fn();
@@ -213,7 +223,7 @@ describe('controllers/todo', () => {
     });
 
     it('should create new todo successfully', async () => {
-      const todoPayload: CreateTodoPayload = {
+      const todoPayload: CreateTodoInput = {
         userId: 1,
         title: 'test',
         isCompleted: false,
@@ -239,6 +249,191 @@ describe('controllers/todo', () => {
 
       expect(jsonMock).toBeCalledTimes(1);
       expect(jsonMock).toBeCalledWith(mockTodo);
+    });
+  });
+
+  describe('verifyTodoId', () => {
+    it.each`
+      id
+      ${''}
+      ${'text'}
+      ${'0'}
+      ${'-1'}
+    `('should raise error when provided id="$id"', async ({ id }) => {
+      const request = createMockRequest<any, any, TodoIdPathParams>({
+        params: { id },
+      });
+
+      await verifyTodoId(request, mockResponse, nextFn);
+
+      expect(nextMock).toBeCalledTimes(1);
+      expect(nextMock).toBeCalledWith(new APIError('Wrong ID provided.', 400));
+    });
+
+    it('should raise error when provided not existed todo id', async () => {
+      const request = createMockRequest<any, any, TodoIdPathParams>({
+        params: { id: '100' },
+      });
+      prismaMock.todo.findUnique.mockResolvedValue(null);
+
+      await verifyTodoId(request, mockResponse, nextFn);
+
+      expect(nextMock).toBeCalledTimes(1);
+      expect(nextMock).toBeCalledWith(RECORD_NOT_FOUND);
+    });
+
+    it('should raise error when Prisma client throw error', async () => {
+      const request = createMockRequest<any, any, TodoIdPathParams>({
+        params: { id: '100' },
+      });
+
+      const databaseError = new Error('Could not connect to database.');
+      prismaMock.todo.findUnique.mockRejectedValue(databaseError);
+
+      await verifyTodoId(request, mockResponse, nextFn);
+
+      expect(nextMock).toBeCalledTimes(1);
+      expect(nextMock).toBeCalledWith(databaseError);
+    });
+
+    it('should move to next handler when found todo with the provided id', async () => {
+      const request = createMockRequest<any, any, TodoIdPathParams>({
+        params: { id: '1' },
+      });
+
+      prismaMock.todo.findUnique.mockResolvedValue({
+        id: 1,
+        userId: 1,
+        title: 'test',
+        isCompleted: false,
+      });
+
+      await verifyTodoId(request, mockResponse, nextFn);
+
+      expect(nextMock).toBeCalledTimes(1);
+      expect(nextMock).toBeCalledWith();
+    });
+  });
+
+  describe('updateTodo', () => {
+    it('should raise error when provided wrong payload', async () => {
+      const wrongPayloadRequest = createMockRequest<any, any, TodoIdPathParams>(
+        {
+          params: { id: '1' },
+          body: {
+            payload: 'wrong',
+          },
+        },
+      );
+
+      await updateTodo(wrongPayloadRequest, mockResponse, nextFn);
+
+      expect(nextMock).toBeCalledTimes(1);
+      expect(nextMock.mock.calls[0][0].message).toMatch(
+        'Invalid UpdateTodoInput',
+      );
+    });
+
+    const updateTodoPayloadRequest = createMockRequest<
+      UpdateTodoInput,
+      any,
+      TodoIdPathParams
+    >({
+      params: { id: '1' },
+      body: {
+        isCompleted: true,
+      },
+    });
+
+    it('should raise error when updating todo throws error', async () => {
+      const prismaError = new Error('Failed to update.');
+      prismaMock.todo.update.mockRejectedValue(prismaError);
+
+      await updateTodo(updateTodoPayloadRequest, mockResponse, nextFn);
+
+      expect(nextMock).toBeCalledTimes(1);
+      expect(nextMock).toBeCalledWith(prismaError);
+    });
+
+    it('should update todo successfully', async () => {
+      const mockTodo: Todo = {
+        id: 1,
+        userId: 1,
+        isCompleted: true,
+        title: 'test',
+      };
+      prismaMock.todo.update.mockResolvedValue(mockTodo);
+
+      await updateTodo(updateTodoPayloadRequest, mockResponse, nextFn);
+
+      expect(jsonMock).toBeCalledTimes(1);
+      expect(jsonMock).toBeCalledWith(mockTodo);
+    });
+  });
+
+  describe('getTodo', () => {
+    const getTodoRequest = createMockRequest<any, any, TodoIdPathParams>({
+      params: { id: '100' },
+    });
+
+    it('should raise error when Prisma client throw error', async () => {
+      const prismaError = new Error('Could not connect to database.');
+      prismaMock.todo.findUnique.mockRejectedValue(prismaError);
+
+      await getTodo(getTodoRequest, mockResponse, nextFn);
+
+      expect(nextMock).toBeCalledTimes(1);
+      expect(nextMock).toBeCalledWith(prismaError);
+    });
+
+    it('should get todo successfully', async () => {
+      const mockTodo: Todo = {
+        id: 1,
+        userId: 1,
+        title: 'test',
+        isCompleted: false,
+      };
+
+      prismaMock.todo.findUnique.mockResolvedValue(mockTodo);
+
+      await getTodo(getTodoRequest, mockResponse, nextFn);
+
+      expect(jsonMock).toBeCalledTimes(1);
+      expect(jsonMock).toBeCalledWith(mockTodo);
+    });
+  });
+
+  describe('deleteTodo', () => {
+    const deleteTodoRequest = createMockRequest<any, any, TodoIdPathParams>({
+      params: { id: '100' },
+    });
+
+    it('should raise error when Prisma client throw error', async () => {
+      const prismaError = new Error('Could not connect to database.');
+      prismaMock.todo.delete.mockRejectedValue(prismaError);
+
+      await deleteTodo(deleteTodoRequest, mockResponse, nextFn);
+
+      expect(nextMock).toBeCalledTimes(1);
+      expect(nextMock).toBeCalledWith(prismaError);
+    });
+
+    it('should delete todo successfully', async () => {
+      const mockTodo: Todo = {
+        id: 1,
+        userId: 1,
+        title: 'test',
+        isCompleted: false,
+      };
+
+      prismaMock.todo.delete.mockResolvedValue(mockTodo);
+
+      await deleteTodo(deleteTodoRequest, mockResponse, nextFn);
+
+      expect(jsonMock).toBeCalledTimes(1);
+      expect(jsonMock).toBeCalledWith({
+        message: 'Request successfully.',
+      });
     });
   });
 });
