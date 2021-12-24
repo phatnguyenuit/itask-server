@@ -1,7 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 import { mockDeep, mockReset, DeepMockProxy } from 'jest-mock-extended';
 
-// import { mockServer } from './mocks/server';
+import { mockServer } from './mocks/server';
 import prisma from './utils/prisma';
 
 // Mock prisma singleton instance
@@ -20,12 +20,12 @@ beforeEach(() => {
 
 // Setting up mock server with MSW
 
-// // Establish API mocking before all tests.
-// beforeAll(() => mockServer.listen());
+// Establish API mocking before all tests.
+beforeAll(() => mockServer.listen());
 
-// // Reset any request handlers that we may add during the tests,
-// // so they don't affect other tests.
-// afterEach(() => mockServer.resetHandlers());
+// Reset any request handlers that we may add during the tests,
+// so they don't affect other tests.
+afterEach(() => mockServer.resetHandlers());
 
-// // Clean up after the tests are finished.
-// afterAll(() => mockServer.close());
+// Clean up after the tests are finished.
+afterAll(() => mockServer.close());

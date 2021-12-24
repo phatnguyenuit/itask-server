@@ -1,11 +1,9 @@
 import { Todo } from '@prisma/client';
 import supertest from 'supertest';
-import { prismaMock } from 'setupTests';
 
 import app from '../app';
-import * as authUtils from '../utils/auth';
-
-const verifyTokenMock = jest.spyOn(authUtils, 'verifyToken');
+import { mockServer } from 'mocks/server';
+import { createSearchTodoSuccessHandler } from 'mocks/handlers/user.handlers';
 
 const basePath = '/api/v1/users';
 
@@ -28,9 +26,15 @@ describe(basePath, () => {
       },
     ];
     it('should respond with list of todos', async () => {
-      verifyTokenMock.mockResolvedValue({});
-      prismaMock.todo.count.mockResolvedValue(mockTodos.length);
-      prismaMock.todo.findMany.mockResolvedValue(mockTodos);
+      mockServer.use(
+        createSearchTodoSuccessHandler({
+          data: mockTodos,
+          page: 1,
+          pageSize: 5,
+          total: 2,
+          totalPages: 1,
+        }),
+      );
 
       const response = await request
         .get(`${basePath}/1/todos`)

@@ -1,5 +1,10 @@
 import { Validator } from 'typings/common';
-import { getEnv, removeNullableProperties, validateRawData } from '../common';
+import {
+  convertPathToNonStartRegex,
+  getEnv,
+  removeNullableProperties,
+  validateRawData,
+} from '../common';
 
 describe('utils/common', () => {
   describe('removeNullableProperties', () => {
@@ -71,6 +76,14 @@ describe('utils/common', () => {
           `Environment variable named "notExistEnv" is not defined.`,
         );
       }
+    });
+  });
+
+  describe('convertPathToNonStartRegex', () => {
+    it('should remove the Regex starting notation', () => {
+      const regex = convertPathToNonStartRegex('/test');
+
+      expect(regex).toEqual(/\/test[\/#\?]?$/i);
     });
   });
 });
