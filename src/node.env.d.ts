@@ -3,5 +3,6 @@ declare namespace NodeJS {
     NODE_ENV?: 'development' | 'production' | 'test';
     SECRET_KEY?: string;
     EXPIRES_IN?: string;
+    CORS_ORIGIN?: string;
   }
 }

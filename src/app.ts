@@ -2,11 +2,11 @@ import express from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
 
-import { getEnv } from './utils/common';
 import authMiddleware from './middlewares/auth.middleware';
 import errorMiddleware from './middlewares/error.middleware';
 import apiRoutes from './routes/api';
-import logger from './utils/logger';
+import { getEnv } from './utils/common';
+// import logger from './utils/logger';
 
 const app = express();
 
@@ -14,7 +14,7 @@ const app = express();
 
 // LOGGING
 const mode = process.env.NODE_ENV === 'development' ? 'dev' : 'combined';
-logger.log(`Logging mode: ${JSON.stringify(mode)}`);
+// logger.log(`Logging mode: ${JSON.stringify(mode)}`);
 
 app.use(morgan(mode));
 

@@ -7,8 +7,7 @@ import dotEnvExpand from 'dotenv-expand';
 
 const NODE_ENV = process.env.NODE_ENV;
 
-const getFilePath = (file: string) =>
-  path.resolve(String(process.env.PWD), file);
+const getFilePath = (file: string) => path.resolve(file);
 
 const dotEnvFiles = [
   getFilePath(`.env.${NODE_ENV}.local`),

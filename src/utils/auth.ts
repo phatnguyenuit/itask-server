@@ -31,7 +31,7 @@ export const generateToken = <TData extends object>(
 export const verifyToken = (token: string, options = {}) => {
   const secretKey = getEnv('SECRET_KEY');
 
-  return new Promise((resolve, reject) => {
+  return new Promise<jwt.JwtPayload | undefined>((resolve, reject) => {
     jwt.verify(token, secretKey, options, (error, data) => {
       if (error) {
         if (error instanceof TokenExpiredError) {
