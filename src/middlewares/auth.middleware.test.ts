@@ -20,7 +20,7 @@ describe('authMiddleware', () => {
       },
     } as unknown as Request);
 
-  const response = {
+  const mockResponse = {
     status: statusMock,
     json: jsonMock,
   } as unknown as Response;
@@ -31,7 +31,7 @@ describe('authMiddleware', () => {
   it('should go next if req.path matches `/auth/*`', async () => {
     const request = createRequest('/api/v1/auth/test');
 
-    await authMiddleware(request, response, nextFn);
+    await authMiddleware(request, mockResponse, nextFn);
 
     expect(nextMock).toBeCalledTimes(1);
     expect(nextMock).toBeCalledWith();
@@ -40,7 +40,7 @@ describe('authMiddleware', () => {
   it('should redirect error if no access token provided', async () => {
     const request = createRequest('/api/v1/test');
 
-    await authMiddleware(request, response, nextFn);
+    await authMiddleware(request, mockResponse, nextFn);
 
     expect(nextMock).toBeCalledTimes(1);
     expect(nextMock).toBeCalledWith(REQUIRED_TOKEN_ERROR);
@@ -50,7 +50,7 @@ describe('authMiddleware', () => {
     const request = createRequest('/api/v1/test', 'token');
     verifyTokenMock.mockResolvedValue({ pass: true });
 
-    await authMiddleware(request, response, nextFn);
+    await authMiddleware(request, mockResponse, nextFn);
 
     expect(verifyTokenMock).toBeCalledWith('token');
     expect(nextMock).toBeCalledTimes(1);
@@ -61,7 +61,7 @@ describe('authMiddleware', () => {
     const request = createRequest('/api/v1/test', 'token');
     verifyTokenMock.mockRejectedValue(INVALID_TOKEN_ERROR);
 
-    await authMiddleware(request, response, nextFn);
+    await authMiddleware(request, mockResponse, nextFn);
 
     expect(verifyTokenMock).toBeCalledWith('token');
     expect(nextMock).toBeCalledTimes(1);

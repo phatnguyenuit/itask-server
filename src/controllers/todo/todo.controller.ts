@@ -10,7 +10,7 @@ import prisma from 'utils/prisma';
 
 import { validate } from './todo.controller.types.validator';
 
-const queryParamsMapping = (queryParams: Request['query']) => {
+export const queryParamsMapping = (queryParams: Request['query']) => {
   const { userId, id, isCompleted, title, page, pageSize } = queryParams;
 
   return {
@@ -83,10 +83,7 @@ export const searchTodos: RequestHandler = async (req, res, next) => {
 
 export const createTodo: RequestHandler = async (req, res, next) => {
   try {
-    console.log("validate('CreateTodoInput')", validate('CreateTodoInput'));
     const data = validateRawData(validate('CreateTodoInput'), req.body);
-
-    console.log(`data`, data);
 
     const existingUser = await prisma.user.findUnique({
       where: {

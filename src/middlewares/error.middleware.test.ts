@@ -22,7 +22,7 @@ describe('errorMiddleware', () => {
     headers: { correlation_id: 'correlation_id' },
   } as unknown as Request;
 
-  const response = {
+  const mockResponse = {
     status: statusMock,
     json: jsonMock,
   } as unknown as Response;
@@ -30,8 +30,8 @@ describe('errorMiddleware', () => {
   const nextFn = () => nextMock() as unknown as NextFunction;
 
   beforeEach(() => {
-    statusMock.mockReturnValue(response);
-    jsonMock.mockReturnValue(response);
+    statusMock.mockReturnValue(mockResponse);
+    jsonMock.mockReturnValue(mockResponse);
   });
 
   it.each`
@@ -39,7 +39,7 @@ describe('errorMiddleware', () => {
     ${error}
     ${apiError}
   `('should respond with error message', ({ error }) => {
-    errorMiddleware(error, request, response, nextFn);
+    errorMiddleware(error, request, mockResponse, nextFn);
 
     expect(jsonMock).toBeCalledWith({ message: error.message });
   });
@@ -49,7 +49,7 @@ describe('errorMiddleware', () => {
     ${error}
     ${apiError}
   `('should log error', ({ error }) => {
-    errorMiddleware(error, request, response, nextFn);
+    errorMiddleware(error, request, mockResponse, nextFn);
 
     expect(mockLogError).toBeCalledWith(
       'ERROR',
@@ -59,19 +59,19 @@ describe('errorMiddleware', () => {
   });
 
   it('should respond with status code', () => {
-    errorMiddleware(apiError, request, response, nextFn);
+    errorMiddleware(apiError, request, mockResponse, nextFn);
 
     expect(statusMock).toBeCalledWith(apiError.statusCode);
   });
 
   it('should respond with default error', () => {
-    errorMiddleware({}, request, response, nextFn);
+    errorMiddleware({}, request, mockResponse, nextFn);
 
     expect(jsonMock).toBeCalledWith({ message: 'Something went wrong.' });
   });
 
   it('should respond with default status code=500', () => {
-    errorMiddleware({}, request, response, nextFn);
+    errorMiddleware({}, request, mockResponse, nextFn);
 
     expect(statusMock).toBeCalledWith(500);
   });

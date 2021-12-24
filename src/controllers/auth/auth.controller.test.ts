@@ -1,12 +1,13 @@
 import { User } from '@prisma/client';
-import { Request, Response, NextFunction } from 'express';
+import { Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 
 import APIError from 'constants/APIError';
 import { INVALID_AUTHENTICATION_ERROR } from 'constants/errors';
 import { prismaMock } from 'setupTests';
-import * as encryption from 'utils/encryption';
 import * as authUtils from 'utils/auth';
+import * as encryption from 'utils/encryption';
+import { createMockRequest } from 'utils/testUtils';
 
 import { changePassword, login, signup } from './auth.controller';
 import {
@@ -30,12 +31,7 @@ jest.mock('utils/logger', () => ({
   error: (...args: any[]) => mockLogError(...args),
 }));
 
-const createRequest = <TBody>(body: TBody) =>
-  ({
-    body,
-  } as unknown as Request);
-
-const res = {
+const mockResponse = {
   json: jsonMock,
 } as unknown as Response;
 
@@ -48,17 +44,21 @@ const mockUser: User = {
   password: 'hashed-password',
 };
 
-const wrongReq = createRequest({ test: 'wrong-data' });
+const wrongReq = createMockRequest({
+  body: { test: 'wrong-data' },
+});
 
 describe('controllers/auth', () => {
   describe('login', () => {
-    const loginRequest = createRequest<LoginInput>({
-      email: 'test@local.com',
-      password: '123@password',
+    const loginRequest = createMockRequest<LoginInput>({
+      body: {
+        email: 'test@local.com',
+        password: '123@password',
+      },
     });
 
     it('should throw error when wrong data payload provided', async () => {
-      await login(wrongReq, res, nextFn);
+      await login(wrongReq, mockResponse, nextFn);
 
       const validationError = mockLogError.mock.calls[0][0];
 
@@ -73,7 +73,7 @@ describe('controllers/auth', () => {
       //   Mock user not found
       prismaMock.user.findUnique.mockResolvedValue(null);
 
-      await login(loginRequest, res, nextFn);
+      await login(loginRequest, mockResponse, nextFn);
 
       expect(nextMock).toBeCalledTimes(1);
       expect(nextMock).toBeCalledWith(INVALID_AUTHENTICATION_ERROR);
@@ -85,7 +85,7 @@ describe('controllers/auth', () => {
       // Wrong password
       verifyMock.mockResolvedValue(false);
 
-      await login(loginRequest, res, nextFn);
+      await login(loginRequest, mockResponse, nextFn);
 
       expect(nextMock).toBeCalledTimes(1);
       expect(nextMock).toBeCalledWith(INVALID_AUTHENTICATION_ERROR);
@@ -101,7 +101,7 @@ describe('controllers/auth', () => {
         },
       });
 
-      await login(loginRequest, res, nextFn);
+      await login(loginRequest, mockResponse, nextFn);
 
       expect(generateTokenMock).toBeCalledTimes(1);
       expect(generateTokenMock).toBeCalledWith({
@@ -124,15 +124,17 @@ describe('controllers/auth', () => {
   });
 
   describe('changePassword', () => {
-    const changePasswordRequest = createRequest<ChangePasswordInput>({
-      email: 'test@local.com',
-      currentPassword: '123@password',
-      newPassword: '123@password-new',
-      rePassword: '123@password-new',
+    const changePasswordRequest = createMockRequest<ChangePasswordInput>({
+      body: {
+        email: 'test@local.com',
+        currentPassword: '123@password',
+        newPassword: '123@password-new',
+        rePassword: '123@password-new',
+      },
     });
 
     it('should throw error when wrong data payload provided', async () => {
-      await changePassword(wrongReq, res, nextFn);
+      await changePassword(wrongReq, mockResponse, nextFn);
 
       const validationError = mockLogError.mock.calls[0][0];
 
@@ -147,7 +149,7 @@ describe('controllers/auth', () => {
       //   Mock user not found
       prismaMock.user.findUnique.mockResolvedValue(null);
 
-      await changePassword(changePasswordRequest, res, nextFn);
+      await changePassword(changePasswordRequest, mockResponse, nextFn);
 
       expect(nextMock).toBeCalledTimes(1);
       expect(nextMock).toBeCalledWith(INVALID_AUTHENTICATION_ERROR);
@@ -158,7 +160,7 @@ describe('controllers/auth', () => {
       // Wrong password
       verifyMock.mockResolvedValue(false);
 
-      await changePassword(changePasswordRequest, res, nextFn);
+      await changePassword(changePasswordRequest, mockResponse, nextFn);
 
       expect(nextMock).toBeCalledTimes(1);
       expect(nextMock).toBeCalledWith(INVALID_AUTHENTICATION_ERROR);
@@ -168,14 +170,16 @@ describe('controllers/auth', () => {
       prismaMock.user.findUnique.mockResolvedValue(mockUser);
       verifyMock.mockResolvedValue(true);
 
-      const notMatchedPasswordsReq = createRequest<ChangePasswordInput>({
-        email: 'test@local.com',
-        currentPassword: '123@password',
-        newPassword: '123@password-new',
-        rePassword: '123@password-re',
+      const notMatchedPasswordsReq = createMockRequest<ChangePasswordInput>({
+        body: {
+          email: 'test@local.com',
+          currentPassword: '123@password',
+          newPassword: '123@password-new',
+          rePassword: '123@password-re',
+        },
       });
 
-      await changePassword(notMatchedPasswordsReq, res, nextFn);
+      await changePassword(notMatchedPasswordsReq, mockResponse, nextFn);
 
       expect(nextMock).toBeCalledTimes(1);
       expect(nextMock).toBeCalledWith(
@@ -189,7 +193,7 @@ describe('controllers/auth', () => {
       encryptMock.mockResolvedValue('hashed-password');
       prismaMock.user.update.mockResolvedValue(mockUser);
 
-      await changePassword(changePasswordRequest, res, nextFn);
+      await changePassword(changePasswordRequest, mockResponse, nextFn);
 
       expect(jsonMock).toBeCalledTimes(1);
       expect(jsonMock).toBeCalledWith({
@@ -199,15 +203,17 @@ describe('controllers/auth', () => {
   });
 
   describe('signup', () => {
-    const signupRequest = createRequest<SignupInput>({
-      email: 'hello@world.com',
-      name: 'Hello',
-      password: '123@OK.fine?',
-      rePassword: '123@OK.fine?',
+    const signupRequest = createMockRequest<SignupInput>({
+      body: {
+        email: 'hello@world.com',
+        name: 'Hello',
+        password: '123@OK.fine?',
+        rePassword: '123@OK.fine?',
+      },
     });
 
     it('should throw error when wrong data payload provided', async () => {
-      await signup(wrongReq, res, nextFn);
+      await signup(wrongReq, mockResponse, nextFn);
 
       const validationError = mockLogError.mock.calls[0][0];
 
@@ -219,14 +225,16 @@ describe('controllers/auth', () => {
     });
 
     it('should throw error when passwords are not matched together', async () => {
-      const wrongPasswordRequest = createRequest<SignupInput>({
-        email: 'hello@world.com',
-        name: 'Hello',
-        password: '123@OK.fine?',
-        rePassword: '[diff]123@OK.fine?',
+      const wrongPasswordRequest = createMockRequest<SignupInput>({
+        body: {
+          email: 'hello@world.com',
+          name: 'Hello',
+          password: '123@OK.fine?',
+          rePassword: '[diff]123@OK.fine?',
+        },
       });
 
-      await signup(wrongPasswordRequest, res, nextFn);
+      await signup(wrongPasswordRequest, mockResponse, nextFn);
 
       expect(nextMock).toBeCalledTimes(1);
       expect(nextMock).toBeCalledWith(
@@ -237,7 +245,7 @@ describe('controllers/auth', () => {
     it('should throw error when there is a existed user', async () => {
       prismaMock.user.findUnique.mockResolvedValue(mockUser);
 
-      await signup(signupRequest, res, nextFn);
+      await signup(signupRequest, mockResponse, nextFn);
 
       expect(nextMock).toBeCalledTimes(1);
       expect(nextMock).toBeCalledWith(new APIError('User is existed.', 400));
@@ -248,7 +256,7 @@ describe('controllers/auth', () => {
       encryptMock.mockResolvedValue('hashed-password');
       prismaMock.user.create.mockResolvedValue(mockUser);
 
-      await signup(signupRequest, res, nextFn);
+      await signup(signupRequest, mockResponse, nextFn);
 
       expect(jsonMock).toBeCalledTimes(1);
       expect(jsonMock).toBeCalledWith({
