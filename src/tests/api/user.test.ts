@@ -1,9 +1,9 @@
 import { Todo } from '@prisma/client';
 import supertest from 'supertest';
 
-import app from '../app';
-import { mockServer } from '../mocks/server';
-import { createSearchTodoSuccessHandler } from '../mocks/handlers/user.handlers';
+import app from 'app';
+import { mockServer } from 'mocks/server';
+import { createSearchTodoSuccessHandler } from 'mocks/handlers/user.handlers';
 
 describe('api/v1/users', () => {
   const request = supertest(app);

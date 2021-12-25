@@ -1,12 +1,12 @@
 import supertest from 'supertest';
 
-import app from '../app';
+import app from 'app';
 import {
   changePasswordSuccessHandler,
   createLoginSuccessHandler,
   signupSuccessHandler,
-} from '../mocks/handlers/auth.handlers';
-import { mockServer } from '../mocks/server';
+} from 'mocks/handlers/auth.handlers';
+import { mockServer } from 'mocks/server';
 
 describe('api/v1/auth', () => {
   const request = supertest(app);

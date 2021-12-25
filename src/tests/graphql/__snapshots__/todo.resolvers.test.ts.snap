@@ -1,0 +1,110 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`resolvers/todo createTodo should create todo successfully 1`] = `
+Object {
+  "data": Object {
+    "createTodo": Object {
+      "id": 1,
+      "isCompleted": false,
+      "title": "todo 1",
+      "userId": 1,
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`resolvers/todo deleteTodo should delete todo successfully 1`] = `
+Object {
+  "data": Object {
+    "deleteTodo": true,
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`resolvers/todo getTodo should get todo by id successfully 1`] = `
+Object {
+  "data": Object {
+    "getTodo": Object {
+      "id": 1,
+      "isCompleted": false,
+      "title": "todo 1",
+      "userId": 1,
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`resolvers/todo searchTodos should search todos successfully 1`] = `
+Object {
+  "data": Object {
+    "searchTodos": Object {
+      "page": 1,
+      "pageSize": 10,
+      "todos": Array [
+        Object {
+          "id": 1,
+          "isCompleted": false,
+          "title": "todo 1",
+          "userId": 1,
+        },
+        Object {
+          "id": 2,
+          "isCompleted": false,
+          "title": "todo 2",
+          "userId": 1,
+        },
+      ],
+      "total": 2,
+      "totalPages": 1,
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`resolvers/todo updateTodo should update todo successfully 1`] = `
+Object {
+  "data": Object {
+    "updateTodo": Object {
+      "id": 1,
+      "isCompleted": false,
+      "title": "todo 1",
+      "userId": 1,
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;

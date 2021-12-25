@@ -25,11 +25,11 @@ export default {
     '!**/node_modules/**',
     '!**/coverage/**',
     '!**/shared/**',
-    '!**/config/**',
     '!**/mocks/**',
     '!**/*.d.ts',
     '!**/*.validator.ts',
     '!**/*.types.ts',
+    '!src/server.ts',
     '!src/utils/prisma.ts',
   ],
 
@@ -179,7 +179,10 @@ export default {
   // timers: "real",
 
   // A map from regular expressions to paths to transformers
-  // transform: undefined,
+  transform: {
+    '\\.(gql|graphql)$': 'jest-transform-graphql',
+    '.*': 'babel-jest',
+  },
 
   // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
   // transformIgnorePatterns: [

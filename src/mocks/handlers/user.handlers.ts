@@ -4,7 +4,7 @@ import { Todo } from 'shared';
 import { PaginationData } from 'typings/common';
 import { convertPathToNonStartRegex } from 'utils/common';
 
-import { createSearchTodosResolver } from '../resolvers/todos';
+import { createSearchTodosResolver } from '../resolvers/todos.resolvers';
 
 const userAPIPath = '/api/v1/users';
 

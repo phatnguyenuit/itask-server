@@ -102,6 +102,7 @@
     "husky": "^7.0.0",
     "jest": "^27.4.5",
     "jest-mock-extended": "^2.0.4",
+    "jest-transform-graphql": "^2.1.0",
     "lint-staged": "^12.1.2",
     "minimatch": "^3.0.4",
     "msw": "^0.36.3",
