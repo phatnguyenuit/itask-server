@@ -10,7 +10,7 @@ import prisma from 'utils/prisma';
 
 import { validate } from './todo.controller.types.validator';
 
-const queryParamsMapping = (queryParams: Request['query']) => {
+export const queryParamsMapping = (queryParams: Request['query']) => {
   const { userId, id, isCompleted, title, page, pageSize } = queryParams;
 
   return {
@@ -83,10 +83,7 @@ export const searchTodos: RequestHandler = async (req, res, next) => {
 
 export const createTodo: RequestHandler = async (req, res, next) => {
   try {
-    console.log("validate('CreateTodoInput')", validate('CreateTodoInput'));
     const data = validateRawData(validate('CreateTodoInput'), req.body);
-
-    console.log(`data`, data);
 
     const existingUser = await prisma.user.findUnique({
       where: {
@@ -108,30 +105,34 @@ export const createTodo: RequestHandler = async (req, res, next) => {
   }
 };
 
-type TodoIdPathParams = {
+export type TodoIdPathParams = {
   id: string;
 };
 
 export const verifyTodoId: RequestHandler<TodoIdPathParams> = async (
   req,
-  res,
+  _,
   next,
 ) => {
   const id = Number(req.params.id);
 
-  if (!id) {
+  if (!id || id < 0) {
     return next(new APIError('Wrong ID provided.', 400));
   }
 
-  const existingTodo = await prisma.todo.findUnique({
-    where: { id },
-  });
+  try {
+    const existingTodo = await prisma.todo.findUnique({
+      where: { id },
+    });
 
-  if (!existingTodo) {
-    return next(RECORD_NOT_FOUND);
+    if (!existingTodo) {
+      return next(RECORD_NOT_FOUND);
+    }
+
+    next();
+  } catch (error) {
+    next(error);
   }
-
-  next();
 };
 
 export const updateTodo: RequestHandler<TodoIdPathParams> = async (
@@ -142,7 +143,10 @@ export const updateTodo: RequestHandler<TodoIdPathParams> = async (
   try {
     const id = Number(req.params.id);
 
-    const { title, isCompleted } = req.body;
+    const { title, isCompleted } = validateRawData(
+      validate('UpdateTodoInput'),
+      req.body,
+    );
 
     const todo = await prisma.todo.update({
       data: {

@@ -106,7 +106,6 @@ dist
 
 # Custom
 *.env
-yarn.lock
 package-lock.json
 
 prisma/seeds.js

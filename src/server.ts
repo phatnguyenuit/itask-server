@@ -1,57 +1,17 @@
 import { ApolloServer, ApolloServerExpressConfig } from 'apollo-server-express';
-import {
-  ApolloServerPluginLandingPageDisabled,
-  ApolloServerPluginDrainHttpServer,
-  PluginDefinition,
-} from 'apollo-server-core';
-import express, { Request } from 'express';
-import http from 'http';
+import { Application } from 'express';
 
 import app from './app';
-import { loadEnv, getEnv } from './config/env';
-import dataSources from './datasources';
-import schema from './schema';
-// import prisma from './utils/prisma';
+import { loadEnv } from './config/env';
+import { apolloConfig, httpServer } from './config/server';
+import { getEnv } from './utils/common';
 
 // Ensure environment variables are read.
 loadEnv();
 
-const httpServer = http.createServer(app);
-
-const apolloPlugins = [
-  ApolloServerPluginDrainHttpServer({ httpServer }),
-  process.env.NODE_ENV === 'production'
-    ? ApolloServerPluginLandingPageDisabled // Disable landing page for production mode
-    : undefined,
-].filter(Boolean) as PluginDefinition[];
-
-let request: Request;
-
-const apolloConfig: ApolloServerExpressConfig = {
-  schema,
-  dataSources: () => dataSources,
-  plugins: apolloPlugins,
-  nodeEnv: process.env.NODE_ENV,
-  context: ({ req }) => {
-    request = req;
-
-    return {
-      headers: req.headers,
-      // prisma, // Prisma client context
-    };
-  },
-  formatError: (error) => {
-    if (!error.extensions.correlation_id) {
-      error.extensions.correlation_id = request.headers['correlation_id'];
-    }
-
-    return error;
-  },
-};
-
 async function startApolloServer(
   config: ApolloServerExpressConfig,
-  app: express.Application,
+  app: Application,
 ) {
   const server = new ApolloServer(config);
 

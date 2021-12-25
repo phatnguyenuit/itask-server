@@ -17,16 +17,20 @@ export default {
   clearMocks: true,
 
   // Indicates whether the coverage information should be collected while executing the test
-  collectCoverage: true,
+  collectCoverage: false,
 
   // An array of glob patterns indicating a set of files for which coverage information should be collected
   collectCoverageFrom: [
+    'src/**/*.ts',
     '!**/node_modules/**',
     '!**/coverage/**',
     '!**/shared/**',
+    '!**/mocks/**',
     '!**/*.d.ts',
-    '!**/*.validators.ts',
-    'src/**/*.ts',
+    '!**/*.validator.ts',
+    '!**/*.types.ts',
+    '!src/server.ts',
+    '!src/utils/prisma.ts',
   ],
 
   // The directory where Jest should output its coverage files
@@ -47,7 +51,14 @@ export default {
   // ],
 
   // An object that configures minimum threshold enforcement for coverage results
-  // coverageThreshold: undefined,
+  coverageThreshold: {
+    global: {
+      branches: 90,
+      functions: 90,
+      lines: 90,
+      statements: -10, // allows up to 10 uncovered statements
+    },
+  },
 
   // A path to a custom dependency extractor
   // dependencyExtractor: undefined,
@@ -71,9 +82,7 @@ export default {
   // maxWorkers: "50%",
 
   // An array of directory names to be searched recursively up from the requiring module's location
-  // moduleDirectories: [
-  //   "node_modules"
-  // ],
+  moduleDirectories: ['node_modules', 'src'],
 
   // An array of file extensions your modules use
   // moduleFileExtensions: [
@@ -130,10 +139,10 @@ export default {
   // runner: "jest-runner",
 
   // The paths to modules that run some code to configure or set up the testing environment before each test
-  // setupFiles: [],
+  setupFiles: ['./src/setupTestEnv.ts'],
 
   // A list of paths to modules that run some code to configure or set up the testing framework before each test
-  // setupFilesAfterEnv: [],
+  setupFilesAfterEnv: ['./src/setupTests.ts'],
 
   // The number of seconds after which a test is considered as slow and reported as such in the results.
   // slowTestThreshold: 5,
@@ -177,7 +186,10 @@ export default {
   // timers: "real",
 
   // A map from regular expressions to paths to transformers
-  // transform: undefined,
+  transform: {
+    '\\.(gql|graphql)$': 'jest-transform-graphql',
+    '.*': 'babel-jest',
+  },
 
   // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
   // transformIgnorePatterns: [

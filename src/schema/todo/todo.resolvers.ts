@@ -26,9 +26,8 @@ export const resolvers: Resolvers = {
     getTodo: (_, { id }, { dataSources }) => dataSources.TodoAPI.getTodo(id),
   },
   Mutation: {
-    createTodo: (_, { payload }, { dataSources }) => {
-      return dataSources.TodoAPI.createTodo(payload);
-    },
+    createTodo: (_, { payload }, { dataSources }) =>
+      dataSources.TodoAPI.createTodo(payload),
     updateTodo: (_, { id, payload }, { dataSources }) => {
       const nonNullablePayload = removeNullableProperties(payload);
 

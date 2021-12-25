@@ -1,5 +1,10 @@
 import { Validator } from 'typings/common';
-import { removeNullableProperties, validateRawData } from '../common';
+import {
+  convertPathToNonStartRegex,
+  getEnv,
+  removeNullableProperties,
+  validateRawData,
+} from '../common';
 
 describe('utils/common', () => {
   describe('removeNullableProperties', () => {
@@ -47,6 +52,38 @@ describe('utils/common', () => {
       expect(
         validateRawData(validatorMock as Validator<TestData>, data),
       ).rejects.toBe(error);
+    });
+  });
+
+  describe('getEnv', () => {
+    beforeAll(() => {
+      process.env.testEnv = 'test value';
+    });
+
+    it('should return env value', () => {
+      expect(getEnv('testEnv')).toBe('test value');
+    });
+
+    it('should return default value when env not set', () => {
+      expect(getEnv('notExistEnv', 'default value')).toBe('default value');
+    });
+
+    it('should throw error value when env not set', () => {
+      try {
+        getEnv('notExistEnv');
+      } catch (error: any) {
+        expect(error.message).toBe(
+          `Environment variable named "notExistEnv" is not defined.`,
+        );
+      }
+    });
+  });
+
+  describe('convertPathToNonStartRegex', () => {
+    it('should remove the Regex starting notation', () => {
+      const regex = convertPathToNonStartRegex('/test');
+
+      expect(regex).toEqual(/\/test[\/#\?]?$/i);
     });
   });
 });

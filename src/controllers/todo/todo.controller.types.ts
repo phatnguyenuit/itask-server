@@ -3,3 +3,8 @@ export type CreateTodoInput = {
   title: string;
   isCompleted: boolean;
 };
+
+export type UpdateTodoInput = {
+  title?: string;
+  isCompleted?: boolean;
+};

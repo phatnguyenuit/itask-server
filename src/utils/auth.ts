@@ -1,15 +1,18 @@
-import { verify, sign, TokenExpiredError } from 'jsonwebtoken';
-import { getEnv } from 'config/env';
+import jwt, { TokenExpiredError } from 'jsonwebtoken';
 import { INVALID_TOKEN_ERROR, EXPIRED_TOKEN_ERROR } from 'constants/errors';
+import { getEnv } from './common';
 
-export const generateToken = <TData extends string | Buffer | object>(
+export const generateToken = <TData extends object>(
   data: TData,
-): Promise<string> =>
-  new Promise((resolve, reject) => {
-    sign(
+): Promise<string> => {
+  const expiresIn = getEnv('EXPIRES_IN');
+  const secretKey = getEnv('SECRET_KEY');
+
+  return new Promise((resolve, reject) => {
+    jwt.sign(
       data,
-      getEnv('SECRET_KEY'),
-      { expiresIn: getEnv('EXPIRES_IN') },
+      secretKey,
+      { expiresIn },
       (error: Error | null, token: string | undefined) => {
         if (error) {
           reject(error);
@@ -23,12 +26,15 @@ export const generateToken = <TData extends string | Buffer | object>(
       },
     );
   });
+};
 
-export const verifyToken = (token: string, secretKey: string, options = {}) => {
-  return new Promise((resolve, reject) => {
-    verify(token, secretKey, options, (err, data) => {
-      if (err) {
-        if (err instanceof TokenExpiredError) {
+export const verifyToken = (token: string, options = {}) => {
+  const secretKey = getEnv('SECRET_KEY');
+
+  return new Promise<jwt.JwtPayload | undefined>((resolve, reject) => {
+    jwt.verify(token, secretKey, options, (error, data) => {
+      if (error) {
+        if (error instanceof TokenExpiredError) {
           reject(EXPIRED_TOKEN_ERROR);
         }
 

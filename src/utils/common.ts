@@ -1,3 +1,4 @@
+import { pathToRegexp } from 'path-to-regexp';
 import { NonNullableDeep, Nullable, Validator } from 'typings/common';
 
 export const validateRawData = <TData>(
@@ -14,3 +15,17 @@ export const removeNullableProperties = <TValues>(
     ),
   ) as Partial<NonNullableDeep<TValues>>;
 };
+
+export const getEnv = (name: string, defaultValue?: string) => {
+  const value = process.env[name] || defaultValue;
+
+  if (!value) {
+    throw new Error(`Environment variable named "${name}" is not defined.`);
+  }
+
+  return value;
+};
+
+// Ignore the starting notation of Regex `^`
+export const convertPathToNonStartRegex = (path: string) =>
+  pathToRegexp(path, undefined, { start: false });
