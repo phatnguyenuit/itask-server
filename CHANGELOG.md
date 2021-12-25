@@ -1,3 +1,5 @@
+## [1.1.1](https://github.com/phatnguyenuit/itask-server/compare/1.1.0...1.1.1) (2021-12-25)
+
 # [1.1.0](https://github.com/phatnguyenuit/itask-server/compare/1.0.0...1.1.0) (2021-12-23)
 
 
