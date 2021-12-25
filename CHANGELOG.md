@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/phatnguyenuit/itask-server/compare/1.1.3...1.2.0) (2021-12-25)
+
+
+### Features
+
+* add index entry route ([#6](https://github.com/phatnguyenuit/itask-server/issues/6)) ([dea5efc](https://github.com/phatnguyenuit/itask-server/commit/dea5efc5a906eb13d9915c6ecb177a9cb8e1dafe))
+
 ## [1.1.3](https://github.com/phatnguyenuit/itask-server/compare/1.1.2...1.1.3) (2021-12-25)
 
 ## [1.1.2](https://github.com/phatnguyenuit/itask-server/compare/1.1.1...1.1.2) (2021-12-25)
