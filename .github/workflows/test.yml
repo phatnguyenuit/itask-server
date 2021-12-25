@@ -42,6 +42,9 @@ jobs:
                 SECRET_KEY='secret'
                 "
 
+            - name: Display .env.test file
+              run: cat .env.test
+
             - name: Run test coverage
               run: yarn test --coverage
               env:
