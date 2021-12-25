@@ -364,6 +364,8 @@ npm run prisma:generate
 
 ### 13. Test coverage
 
+ As configuration from `./jest.config.ts` Jest will fail if there is less than `90%` branch, line, and function coverage, or if there are more than `10` uncovered statements:
+
 - Using `npm`:
 
   ```sh

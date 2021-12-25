@@ -35,6 +35,11 @@ jobs:
 
             - name: Run test coverage
               run: yarn test --coverage
+              env:
+                  CORS_ORIGIN: '*'
+                  ITASK_API_URL: 'http://localhost:4000'
+                  EXPIRES_IN: '1d'
+                  SECRET_KEY: 'secret key'
 
             - name: Upload coverage to Codecov
               uses: codecov/codecov-action@v1
