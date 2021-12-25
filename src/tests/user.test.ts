@@ -2,12 +2,10 @@ import { Todo } from '@prisma/client';
 import supertest from 'supertest';
 
 import app from '../app';
-import { mockServer } from 'mocks/server';
-import { createSearchTodoSuccessHandler } from 'mocks/handlers/user.handlers';
+import { mockServer } from '../mocks/server';
+import { createSearchTodoSuccessHandler } from '../mocks/handlers/user.handlers';
 
-const basePath = '/api/v1/users';
-
-describe(basePath, () => {
+describe('api/v1/users', () => {
   const request = supertest(app);
 
   describe('/:userId/todos', () => {
@@ -25,7 +23,7 @@ describe(basePath, () => {
         isCompleted: false,
       },
     ];
-    it('should respond with list of todos', async () => {
+    it('should respond with a list of todos', async () => {
       mockServer.use(
         createSearchTodoSuccessHandler({
           data: mockTodos,
@@ -37,7 +35,7 @@ describe(basePath, () => {
       );
 
       const response = await request
-        .get(`${basePath}/1/todos`)
+        .get('/api/v1/users/1/todos')
         .set('x-access-token', 'token')
         .redirects(1); // move to 1 redirects
 

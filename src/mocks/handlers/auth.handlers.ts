@@ -16,3 +16,27 @@ export const createLoginSuccessHandler = (
       }),
     );
   });
+
+export const changePasswordSuccessHandler = rest.post(
+  convertPathToNonStartRegex('/api/v1/auth/change-password'),
+  (_, res, ctx) => {
+    return res(
+      ctx.status(200),
+      ctx.json({
+        message: 'Request successfully.',
+      }),
+    );
+  },
+);
+
+export const signupSuccessHandler = rest.post(
+  convertPathToNonStartRegex('/api/v1/auth/signup'),
+  (_, res, ctx) => {
+    return res(
+      ctx.status(200),
+      ctx.json({
+        message: 'Request successfully.',
+      }),
+    );
+  },
+);
