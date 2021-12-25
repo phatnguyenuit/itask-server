@@ -1,3 +1,10 @@
+## [1.1.2](https://github.com/phatnguyenuit/itask-server/compare/1.1.1...1.1.2) (2021-12-25)
+
+
+### Bug Fixes
+
+* fix path-to-regexp module ([62aaae4](https://github.com/phatnguyenuit/itask-server/commit/62aaae46bdeeb79eddd1cc843f0e2665368a8daa))
+
 ## [1.1.1](https://github.com/phatnguyenuit/itask-server/compare/1.1.0...1.1.1) (2021-12-25)
 
 # [1.1.0](https://github.com/phatnguyenuit/itask-server/compare/1.0.0...1.1.0) (2021-12-23)
