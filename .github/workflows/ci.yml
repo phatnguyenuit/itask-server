@@ -33,6 +33,15 @@ jobs:
             - name: Install dependencies
               run: yarn install --no-progress --non-interactive
 
+            - name: Create .env.test file
+              uses: "finnp/create-file-action@master"
+              env:
+                FILE_NAME: ".env.test"
+                FILE_DATA: """
+                NODE_ENV='test'
+                SECRET_KEY='secret'
+                """
+
             - name: Run test coverage
               run: yarn test --coverage
               env:
