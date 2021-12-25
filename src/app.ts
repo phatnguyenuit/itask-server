@@ -5,6 +5,7 @@ import morgan from 'morgan';
 import authMiddleware from './middlewares/auth.middleware';
 import errorMiddleware from './middlewares/error.middleware';
 import apiRoutes from './routes/api';
+import indexRoutes from './routes/index';
 import { getEnv } from './utils/common';
 
 const app = express();
@@ -29,6 +30,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 // ROUTES
+app.use('/', indexRoutes);
 app.use('/api', authMiddleware, apiRoutes);
 
 // ERROR HANDLER
