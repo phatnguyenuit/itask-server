@@ -384,3 +384,7 @@ npm run prisma:generate
 - [Prisma ORM](https://www.prisma.io/docs/getting-started/)
 - [Docker - Control startup and shutdown order in Compose](https://docs.docker.com/compose/startup-order/)
 - [Wait for it](https://github.com/vishnubob/wait-for-it)
+- [Mock Prisma client](https://www.prisma.io/docs/guides/testing/unit-testing#mocking-the-prisma-client)
+- [Apollo GraphQL server testing](https://www.apollographql.com/docs/apollo-server/testing/testing/)
+- [ExpressJS Server testing with `supertest`](https://github.com/visionmedia/supertest)
+- [API Mocking with `mswjs.io`](https://mswjs.io/)
