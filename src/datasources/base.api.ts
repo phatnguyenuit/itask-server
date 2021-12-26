@@ -1,4 +1,9 @@
-import { RequestOptions, RESTDataSource } from 'apollo-datasource-rest';
+import {
+  RequestOptions,
+  RESTDataSource,
+  Request,
+  Response,
+} from 'apollo-datasource-rest';
 import { ValueOrPromise } from 'apollo-server-types';
 import { v4 as uuid_v4 } from 'uuid';
 
@@ -20,6 +25,20 @@ abstract class BaseAPI extends RESTDataSource<ResolverContext> {
     const token = this.context.headers['x-access-token'];
     request.headers.set('x-access-token', String(token));
     request.headers.set('correlation_id', uuid_v4());
+  }
+
+  deleteCacheForRequest(request: Request) {
+    this.memoizedResults.delete(this.cacheKeyFor(request));
+  }
+
+  protected didReceiveResponse(response: Response, request: Request) {
+    this.deleteCacheForRequest(request);
+    return super.didReceiveResponse(response, request);
+  }
+
+  protected didEncounterError(error: Error, request: Request) {
+    this.deleteCacheForRequest(request);
+    return super.didEncounterError(error, request);
   }
 
   protected logOrThrowValidationError<TResponse>(
