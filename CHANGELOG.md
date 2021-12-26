@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/phatnguyenuit/itask-server/compare/1.2.0...1.3.0) (2021-12-26)
+
+
+### Features
+
+* add no-cache datasource ([b4c1ca5](https://github.com/phatnguyenuit/itask-server/commit/b4c1ca5bf22dafeaa532a49e7beed602e764ba68))
+
 # [1.2.0](https://github.com/phatnguyenuit/itask-server/compare/1.1.3...1.2.0) (2021-12-25)
 
 
