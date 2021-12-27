@@ -1,6 +1,9 @@
-class APIError<TMessage extends string> extends Error {
+class APIError<
+  TMessage extends string,
+  TCode extends number = number,
+> extends Error {
   public statusCode: number;
-  constructor(message: TMessage, statusCode: number) {
+  constructor(message: TMessage, statusCode: TCode) {
     super(message);
     this.statusCode = statusCode;
   }
