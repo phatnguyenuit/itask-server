@@ -207,5 +207,5 @@ export default {
   // watchPathIgnorePatterns: [],
 
   // Whether to use watchman for file crawling
-  watchman: false,
+  watchman: true,
 };

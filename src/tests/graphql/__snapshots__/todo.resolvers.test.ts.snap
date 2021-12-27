@@ -55,6 +55,23 @@ Object {
 }
 `;
 
+exports[`resolvers/todo searchTodos should search todos failed 1`] = `
+Object {
+  "data": Object {
+    "searchTodos": null,
+  },
+  "errors": Array [
+    [GraphQLError: 500: Internal Server Error],
+  ],
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
 exports[`resolvers/todo searchTodos should search todos successfully 1`] = `
 Object {
   "data": Object {

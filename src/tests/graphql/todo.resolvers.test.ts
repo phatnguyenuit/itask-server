@@ -7,6 +7,7 @@ import { MOCK_TODO, MOCK_TODOS } from 'fixtures/todo';
 import {
   createCreateTodoSuccessHandler,
   createGetTodoSuccessHandler,
+  createSearchTodosFailedHandler,
   createSearchTodosSuccessHandler,
   createUpdateTodoSuccessHandler,
   deleteTodoSuccessHandler,
@@ -47,6 +48,22 @@ describe('resolvers/todo', () => {
           pageSize: 10,
           data: MOCK_TODOS,
         }),
+      );
+      // run query against the server and snapshot the output
+      const res = await apolloServer.executeOperation(
+        {
+          query: SEARCH_TODOS,
+          variables: { userId: 1 },
+        },
+        MOCK_EXPRESS_CONTEXT,
+      );
+
+      expect(res).toMatchSnapshot();
+    });
+
+    it('should search todos failed', async () => {
+      mockServer.use(
+        createSearchTodosFailedHandler('Failed to search todos', 500),
       );
       // run query against the server and snapshot the output
       const res = await apolloServer.executeOperation(

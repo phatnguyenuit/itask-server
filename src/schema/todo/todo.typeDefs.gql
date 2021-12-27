@@ -17,6 +17,8 @@ input SearchTodoParams {
   id: Int
   title: String
   isCompleted: Boolean
+  page: Int
+  pageSize: Int
 }
 
 input CreateTodoPayload {
